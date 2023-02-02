@@ -173,7 +173,7 @@ function Page() {
 
       <div className="main-body">
         <div className="welcome-text">
-          Hello Mr. Lynn Thit !<br></br> Welcome to the 2023 Curriculum for{" "}
+          Hello Mr. Lynn !<br></br> Welcome to the 2023 Curriculum for{" "}
           {selectedMajor}
         </div>
         <button
