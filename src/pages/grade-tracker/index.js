@@ -208,6 +208,56 @@ function Page() {
           Hello Mr. Lynn Thit !<br></br> Welcome to the 2023 Curriculum for{" "}
           {selectedMajor}
         </div>
+      </div>
+
+			<table className="table table-striped">
+				<tbody>
+					<tr>
+						<td>
+							<Form.Select
+								aria-label="Select Group"
+								value={selectedGroup.groupName}
+								onChange={e =>
+									setSelectedGroup(
+										subjectsData.find(group => group.groupName === e.target.value)
+									)
+								}
+							>
+								{subjectsData.map(group => (
+									<option key={group.groupName} value={group.groupName}>
+										{group.groupName}
+									</option>
+								))}
+							</Form.Select>
+						</td>
+						<td>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+
+			<table className="table table-striped">
+				<thead>
+					<tr>
+						<th className="th">Subject Group</th>
+						<th className="th">Subject Code</th>
+						<th className="th">Subject Name</th>
+						{/* <th className="th">Grade</th> */}
+						<th className="th">Set Grade</th>
+					</tr>
+
+				</thead>
+
+				<tbody>
+						<>
+							{selectedGroup.subjects.map((course, j) => (
+								<tr key={j}>
+									<td>{selectedGroup.groupName}</td>
+									<td>{course.code}</td>
+									<td>{course.name}</td>
+									{/* <td>{course.grade}</td> */}
+									<td>
+										
         <button
           className="button1 font-weight-bold"
           onClick={() => handleClickGrade("A") && setSelectedGrade("A")}
@@ -256,59 +306,12 @@ function Page() {
         >
           C-
         </button>
-      </div>
-
-			<table className="table table-striped">
-				<tbody>
-					<tr>
-						<td>
-							<Form.Select
-								aria-label="Select Group"
-								value={selectedGroup.groupName}
-								onChange={e =>
-									setSelectedGroup(
-										subjectsData.find(group => group.groupName === e.target.value)
-									)
-								}
-							>
-								{subjectsData.map(group => (
-									<option key={group.groupName} value={group.groupName}>
-										{group.groupName}
-									</option>
-								))}
-							</Form.Select>
-						</td>
-						<td>
-						</td>
-					</tr>
-				</tbody>
-			</table>
-
-			<table className="table table-striped">
-				<thead>
-					<tr>
-						<th className="th">Subject Group</th>
-						<th className="th">Subject Code</th>
-						<th className="th">Subject Name</th>
-						<th className="th">Grade</th>
-					</tr>
-
-				</thead>
-
-				<tbody>
-						<>
-							{selectedGroup.subjects.map((course, j) => (
-								<tr key={j}>
-									<td>{selectedGroup.groupName}</td>
-									<td>{course.code}</td>
-									<td>{course.name}</td>
-									<td>{course.grade}</td>
-									<td>
 										<button
 											onClick={() =>
 												handleClick(course.name) &&
 												addToGradeList([course.name, course.grade])
 											}
+											style={{marginLeft:"10px"}}
 										>
 											Add+
 										</button>
