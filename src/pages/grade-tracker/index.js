@@ -171,6 +171,35 @@ function Page() {
 
 			
 
+			<div>
+				<table className="table table-striped">
+					<thead>
+						<tr>
+							<th>Course Name</th>
+							<th>Course Grade</th>
+						</tr>
+					</thead>
+					<tbody>
+						{/* {selectedCourse.course && selectedCourse.grade && (
+              <tr>
+                <td>{selectedCourse.course}</td>
+                <td>{selectedCourse.grade}</td>
+              </tr>
+            )} */}
+						{gradeList.map((item, i) => {
+							return (
+								<tr key={i}>
+									<td>{item[0]}</td>
+									<td>{item[1]}</td>
+								</tr>
+							)
+						})}
+					</tbody>
+				</table>
+			</div>
+
+			
+
       <div className="main-body">
         <div className="welcome-text">
           Hello Mr. Lynn Thit !<br></br> Welcome to the 2023 Curriculum for{" "}
@@ -272,7 +301,12 @@ function Page() {
 									<td>{course.name}</td>
 									<td>{course.grade}</td>
 									<td>
-										<button>
+										<button
+											onClick={() =>
+												handleClick(course.name) &&
+												addToGradeList([course.name, course.grade])
+											}
+										>
 											Add+
 										</button>
 									</td>
