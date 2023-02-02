@@ -1,6 +1,6 @@
 import * as React from "react"
 import "bootstrap/dist/css/bootstrap.min.css"
-import { Button, Container, Navbar, Nav, NavDropdown, Form } from "react-bootstrap"
+import { Button, Navbar, Nav, NavDropdown, Form } from "react-bootstrap"
 import { useLocalStorage } from "react-use"
 
 function Page() {
@@ -172,6 +172,9 @@ function Page() {
 			
 
 			<div>
+
+				<h2 className="main-title">Overall GPA: {(totalPoints / totalCredits).toFixed(2)}</h2>
+				<h2 className="main-title">Total points: {totalPoints} Total credits: {totalCredits}</h2>
 				<table className="table table-striped">
 					<thead>
 						<tr>
