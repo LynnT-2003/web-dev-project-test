@@ -2,6 +2,7 @@ import * as React from "react"
 import "bootstrap/dist/css/bootstrap.min.css"
 import { Button, Navbar, Nav, NavDropdown, Form } from "react-bootstrap"
 import { useLocalStorage } from "react-use"
+import "./style.css"
 
 function Page() {
 
@@ -126,7 +127,7 @@ function Page() {
 		importJson()
 		console.log('selected group changed', { selectedGroup });
 		console.log({subjectsData})
-	}, [selectedMajor, selectedGroup])
+	}, [selectedMajor, selectedGroup, subjectsData])
 
 	return (
 		<>
@@ -173,6 +174,13 @@ function Page() {
 
 			<div>
 
+				<div className="main-body">
+					<div className="welcome-text">
+						Hello Mr. Lynn Thit !<br></br> Welcome to the 2023 Curriculum for{" "}
+						{selectedMajor}
+					</div>
+				</div>
+
 				<h2 className="main-title">Overall GPA: {(totalPoints / totalCredits).toFixed(2)}</h2>
 				<h2 className="main-title">Total points: {totalPoints} Total credits: {totalCredits}</h2>
 				<table className="table table-striped">
@@ -201,19 +209,20 @@ function Page() {
 				</table>
 			</div>
 
-			
+	
 
-      <div className="main-body">
-        <div className="welcome-text">
-          Hello Mr. Lynn Thit !<br></br> Welcome to the 2023 Curriculum for{" "}
-          {selectedMajor}
-        </div>
-      </div>
-
-			<table className="table table-striped">
+			<table className="table" style={{border:"white"}}>
 				<tbody>
 					<tr>
-						<td>
+						<td
+						style={{
+							width:"270px",
+							fontFamily:"Georgia",
+							fontSize:"20px",
+						}}>Please select a course group:</td>
+						<td style={{
+							textAlign:"left"
+						}}>
 							<Form.Select
 								aria-label="Select Group"
 								value={selectedGroup.groupName}
