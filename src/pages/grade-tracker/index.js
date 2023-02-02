@@ -2,6 +2,7 @@ import * as React from "react"
 import "bootstrap/dist/css/bootstrap.min.css"
 import { Button, Navbar, Nav, NavDropdown, Form } from "react-bootstrap"
 import { useLocalStorage } from "react-use"
+// import css
 import "./style.css"
 
 function Page() {
