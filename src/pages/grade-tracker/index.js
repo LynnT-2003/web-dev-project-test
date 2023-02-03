@@ -130,6 +130,10 @@ function Page() {
 		console.log({subjectsData})
 	}, [selectedMajor, selectedGroup, subjectsData])
 
+	React.useEffect(() => {
+		setSelectedGroup({groupName:"None", subjects:[]})
+	}, selectedMajor)
+
 	return (
 		<>
 			<Navbar bg="light" expand="lg">

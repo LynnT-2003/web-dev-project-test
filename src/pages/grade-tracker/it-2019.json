@@ -1,7 +1,11 @@
 {
     "curriculum": {
       "name": "Computer Science",
-      "courses": [
+      "subjects": [
+        {
+          "groupName": "None",
+          "subjects": []
+        },
         {
           "groupName": "Language Courses",
           "subjects": [

@@ -3,6 +3,10 @@
       "name": "Computer Science",
       "subjects": [
         {
+          "groupName": "None",
+          "subjects": []
+        },
+        {
           "groupName": "Language Courses",
           "subjects": [
             {
