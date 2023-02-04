@@ -1,11 +1,25 @@
 import * as React from "react"
 import "bootstrap/dist/css/bootstrap.min.css"
-import { Button, Navbar, Nav, NavDropdown, Form } from "react-bootstrap"
+import { Modal, Button, Navbar, Nav, NavDropdown, Form } from "react-bootstrap"
 import { useLocalStorage } from "react-use"
 // import css
 import "./style.css"
 
 function Page() {
+
+	// For Modal and Semester
+	const [showModal, setShowModal] = React.useState(false);
+	const [selectedYear, setSelectedYear] = React.useState("");
+	const [selectedSemester, setSelectedSemester] = React.useState("");
+	// HandleClick to hide or show modal
+	const handleClickShowModal = (courseName, courseCode, courseCredit) => {
+		setShowModal(true);
+	};
+	const handleCloseModal = () => setShowModal(false);
+	// Handle for Year and Semester
+	const handleSelectYear = (year) => setSelectedYear(year);
+	const handleSelectSemester = (semester) => setSelectedSemester(semester);
+
 
 	// newList dummy
 	const newList = []
@@ -69,8 +83,10 @@ function Page() {
 			setGrade(course, selectedGrade)
 
 		}
-		
 		addToGradeList([course, code, credit, selectedGrade])
+		setShowModal(true);
+
+		console.table(gradeList)
 	}
 
 	// handleClickGrade to set selectedGradePoint based on grade
@@ -151,7 +167,7 @@ function Page() {
 
 	React.useEffect(() => {
 		setSelectedGroup({ groupName: "None", subjects: [] })
-	}, selectedMajor)
+	}, [selectedMajor])
 
 	return (
 		<>
@@ -363,12 +379,53 @@ function Page() {
 									</button>
 									<button
 										onClick={() =>
-											handleClick(course.name, course.code, course.credit)
+											handleClick(course.name, course.code, course.credit) && handleClickShowModal()
 										}
 										style={{ marginLeft: "10px" }}
 									>
 										Add+
 									</button>
+
+
+									<Modal show={showModal} onHide={handleCloseModal}>
+										<Modal.Header closeButton>
+											<Modal.Title>Select Year and Semester</Modal.Title>
+										</Modal.Header>
+										<Modal.Body>
+											<div className="form-group">
+												<label>Year:</label>
+												<select
+													className="form-control"
+													value={selectedYear}
+													onChange={(e) => handleSelectYear(e.target.value)}
+												>
+													<option value="">Select a year</option>
+													<option value="1">2020</option>
+													<option value="2">2021</option>
+													<option value="3">2022</option>
+													<option value="4">2023</option>
+													<option value="4">2024</option>
+												</select>
+											</div>
+											<div className="form-group">
+												<label>Semester:</label>
+												<select
+													className="form-control"
+													value={selectedSemester}
+													onChange={(e) => handleSelectSemester(e.target.value)}
+												>
+													<option value="">Select a semester</option>
+													<option value="1">1</option>
+													<option value="2">2</option>
+												</select>
+											</div>
+										</Modal.Body>
+										<Modal.Footer>
+											<Button variant="primary" onClick={handleCloseModal}>
+												Done
+											</Button>
+										</Modal.Footer>
+									</Modal>
 								</td>
 							</tr>
 						))}
