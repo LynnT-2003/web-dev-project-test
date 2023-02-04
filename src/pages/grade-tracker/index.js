@@ -7,9 +7,6 @@ import "./style.css"
 
 function Page() {
 
-	// dummy value for credits
-	let dummyCredits = 3
-
 	// newList dummy
 	const newList = []
 
@@ -57,20 +54,20 @@ function Page() {
   }
 
 	// handleClick MAIN
-  const handleClick = course => {
+  const handleClick = (course, code, credit) => {
 
     if (selectedGrade !== "W") {
 
-      setTotalCredits(totalCredits + dummyCredits);
-      console.log('total credits', {totalCredits}, {totalCredits}, ' + ', {dummyCredits})
+      setTotalCredits(totalCredits + credit);
+      console.log('total credits', {totalCredits}, {totalCredits}, ' + ', {credit})
   
-      setTotalPoints(totalPoints + dummyCredits * selectedGradePoint);
+      setTotalPoints(totalPoints + credit * selectedGradePoint);
       console.log('Selected Grade GPA in handleClick', {selectedGradePoint})
       console.log('total points', {totalPoints})
      
       setSelectedCourse(course)
       setGrade(course, selectedGrade)
-      addToGradeList([[course], [selectedGrade]])
+      addToGradeList([course, code, credit, selectedGrade])
 
     }
   }
@@ -192,6 +189,8 @@ function Page() {
 					<thead>
 						<tr>
 							<th>Course Name</th>
+							<th>Course Code</th>
+							<th>Course Credits</th>
 							<th>Course Grade</th>
 						</tr>
 					</thead>
@@ -207,6 +206,8 @@ function Page() {
 								<tr key={i}>
 									<td>{item[0]}</td>
 									<td>{item[1]}</td>
+									<td>{item[2]}</td>
+									<td>{item[3]}</td>
 								</tr>
 							)
 						})}
@@ -322,8 +323,7 @@ function Page() {
         </button>
 										<button
 											onClick={() =>
-												handleClick(course.name) &&
-												addToGradeList([course.name, course.grade])
+												handleClick(course.name, course.code, course.credit)
 											}
 											style={{marginLeft:"10px"}}
 										>
