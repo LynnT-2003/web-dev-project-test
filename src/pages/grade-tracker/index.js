@@ -17,10 +17,10 @@ function Page() {
 	const [selectedMajor, setSelectedMajor] = React.useState("CS")
 
 	// useState for all course groups
-	const [selectedGroup, setSelectedGroup] = React.useState({groupName: 'No group selected', subjects: subjectsData})
+	const [selectedGroup, setSelectedGroup] = React.useState({ groupName: 'No group selected', subjects: subjectsData })
 
 	// useState for a selected course
-  const [selectedCourse, setSelectedCourse] = React.useState([])
+	const [selectedCourse, setSelectedCourse] = React.useState([])
 
 	// useState for selectedGrade
 	const [selectedGrade, setSelectedGrade] = React.useState([])
@@ -29,106 +29,128 @@ function Page() {
 	const [selectedGradePoint, setSelectedGradePoint] = React.useState(0)
 
 	// localStorage for gradeList (a list that stores courses and their respective grades)
-  const [gradeList, setGradeList] = useLocalStorage("gradeList", [])
+	const [gradeList, setGradeList] = useLocalStorage("gradeList", [])
 
 	// localStorage for totalPoints
-  const [totalPoints, setTotalPoints] = useLocalStorage('Total Points', 0);
+	const [totalPoints, setTotalPoints] = useLocalStorage('Total Points', 0);
 
 	// localStorage for totalCredits
-  const [totalCredits, setTotalCredits] = useLocalStorage('Total Credits', 0);
+	const [totalCredits, setTotalCredits] = useLocalStorage('Total Credits', 0);
 
 	// localStorage for overallGPA
-  const [overallGPA, setOverallGPA] = useLocalStorage("overallGPA", 0);
+	const [overallGPA, setOverallGPA] = useLocalStorage("overallGPA", 0);
 
 	// function for adding to gradeList (a neccessity to gradeList and setGradeList)
-  function addToGradeList(props) {
-    gradeList.push(props)
-    setGradeList([...gradeList])
-    return gradeList
-  }
+	function addToGradeList(props) {
+		gradeList.push(props)
+		setGradeList([...gradeList])
+		return gradeList
+	}
 
 	// function for adding a grade to a course and storing it in newList
-  const setGrade = (course, grade) => {
-    setSelectedCourse({ course: course, grade: grade })
-    newList.push([selectedCourse, selectedGrade])
-  }
+	const setGrade = (course, grade) => {
+		setSelectedCourse({ course: course, grade: grade })
+		newList.push([selectedCourse, selectedGrade])
+	}
 
 	// handleClick MAIN
-  const handleClick = (course, code, credit) => {
+	const handleClick = (course, code, credit) => {
 
-    if (selectedGrade !== "W") {
+		if (selectedGrade !== "W") {
 
-      setTotalCredits(totalCredits + credit);
-      console.log('total credits', {totalCredits}, {totalCredits}, ' + ', {credit})
-  
-      setTotalPoints(totalPoints + credit * selectedGradePoint);
-      console.log('Selected Grade GPA in handleClick', {selectedGradePoint})
-      console.log('total points', {totalPoints})
-     
-      setSelectedCourse(course)
-      setGrade(course, selectedGrade)
-      addToGradeList([course, code, credit, selectedGrade])
+			setTotalCredits(totalCredits + credit);
+			console.log('total credits', { totalCredits }, { totalCredits }, ' + ', { credit })
 
-    }
-  }
-	
+			setTotalPoints(totalPoints + credit * selectedGradePoint);
+			console.log('Selected Grade GPA in handleClick', { selectedGradePoint })
+			console.log('total points', { totalPoints })
+
+			setSelectedCourse(course)
+			setGrade(course, selectedGrade)
+
+		}
+		
+		addToGradeList([course, code, credit, selectedGrade])
+	}
+
 	// handleClickGrade to set selectedGradePoint based on grade
-  const handleClickGrade = grade => {
-    console.log('Testing')
-    setSelectedGrade(grade)
-    setGrade(selectedCourse, grade)
+	const handleClickGrade = grade => {
+		console.log('Testing')
+		setSelectedGrade(grade)
+		setGrade(selectedCourse, grade)
 
-    switch (grade) {
-      case "W":
-        setSelectedGradePoint(0)
-      case "A":
-        setSelectedGradePoint(4)
-        break
-      case "A-":
-        setSelectedGradePoint(3.75)
-        break
-      case "B+":
-        setSelectedGradePoint(3.25)
-        break
-      case "B":
-        setSelectedGradePoint(3)
-        break
-      case "B-":
-        setSelectedGradePoint(2.75)
-        break
-      case "C+":
-        setSelectedGradePoint(2.25)
-        break
-      case "C":
-        setSelectedGradePoint(2)
-        break
-      case "C-":
-        setSelectedGradePoint(1.75)
-        break
-      case "D":
-        setSelectedGradePoint(1.25)
-        break
-      case "F":
-        setSelectedGradePoint(1);
-        break
-    }
-    console.log('Currently selected grade GPA', {selectedGradePoint})
-  }
+		switch (grade) {
+			case "W":
+				setSelectedGradePoint(0)
+			case "A":
+				setSelectedGradePoint(4)
+				break
+			case "A-":
+				setSelectedGradePoint(3.75)
+				break
+			case "B+":
+				setSelectedGradePoint(3.25)
+				break
+			case "B":
+				setSelectedGradePoint(3)
+				break
+			case "B-":
+				setSelectedGradePoint(2.75)
+				break
+			case "C+":
+				setSelectedGradePoint(2.25)
+				break
+			case "C":
+				setSelectedGradePoint(2)
+				break
+			case "C-":
+				setSelectedGradePoint(1.75)
+				break
+			case "D":
+				setSelectedGradePoint(1.25)
+				break
+			case "F":
+				setSelectedGradePoint(1);
+				break
+		}
+		console.log('Currently selected grade GPA', { selectedGradePoint })
+	}
+
+	// anonymous function for grouping by semester and returning the result
+	const groupBySemester = grades => {
+		const groupedResults = {};
+		for (const grade of grades) {
+		  const semester = `${grade[4][0]}-${grade[4][1]}`;
+		  if (!groupedResults[semester]) {
+			groupedResults[semester] = [];
+		  }
+		  groupedResults[semester].push(grade);
+		}
+		return groupedResults;
+	  };
 
 
 	React.useEffect(() => {
 		const importJson = async () => {
 			const importedJson = await import(`./${selectedMajor.toLowerCase()}-2019.json`)
 			setSubjectsData(importedJson.curriculum.subjects)
-			console.log("SubjectsData imported and set for ", {selectedMajor})
+			console.log("SubjectsData imported and set for ", { selectedMajor })
 		}
 		importJson()
 		console.log('selected group changed', { selectedGroup });
-		console.log({subjectsData})
+		console.log({ subjectsData })
+
+		// group by semesters and check result in console
+		// const results = groupBySemester(gradeList);
+		// for (const semester in results) {
+		// 	console.log(semester);
+		// 	console.table(results[semester]);
+		//   }
+
 	}, [selectedMajor, selectedGroup, subjectsData])
 
 	React.useEffect(() => {
-		setSelectedGroup({groupName:"None", subjects:[]})
+		setSelectedGroup({ groupName: "None", subjects: [] })
 	}, selectedMajor)
 
 	return (
@@ -172,7 +194,7 @@ function Page() {
 				</Navbar.Collapse>
 			</Navbar>
 
-			
+
 
 			<div>
 
@@ -215,19 +237,19 @@ function Page() {
 				</table>
 			</div>
 
-	
 
-			<table className="table" style={{border:"white"}}>
+
+			<table className="table" style={{ border: "white" }}>
 				<tbody>
 					<tr>
 						<td
-						style={{
-							width:"270px",
-							fontFamily:"Georgia",
-							fontSize:"20px",
-						}}>Please select a course group:</td>
+							style={{
+								width: "270px",
+								fontFamily: "Georgia",
+								fontSize: "20px",
+							}}>Please select a course group:</td>
 						<td style={{
-							textAlign:"left"
+							textAlign: "left"
 						}}>
 							<Form.Select
 								aria-label="Select Group"
@@ -264,75 +286,93 @@ function Page() {
 				</thead>
 
 				<tbody>
-						<>
-							{selectedGroup.subjects.map((course, j) => (
-								<tr key={j}>
-									<td>{selectedGroup.groupName}</td>
-									<td>{course.code}</td>
-									<td>{course.name}</td>
-									{/* <td>{course.grade}</td> */}
-									<td>
-										
-        <button
-          className="button1 font-weight-bold"
-          onClick={() => handleClickGrade("A") && setSelectedGrade("A")}
-        >
-          A
-        </button>
-        <button
-          className="button1 font-weight-bold"
-          onClick={() => handleClickGrade("A-") && setSelectedGrade("A-")}
-        >
-          A-
-        </button>
-        <button
-          className="button1 font-weight-bold"
-          onClick={() => handleClickGrade("B+") && setSelectedGrade("B+")}
-        >
-          B+
-        </button>
-        <button
-          className="button1 font-weight-bold"
-          onClick={() => handleClickGrade("B") && setSelectedGrade("B")}
-        >
-          B
-        </button>
-        <button
-          className="button1 font-weight-bold"
-          onClick={() => handleClickGrade("B-") && setSelectedGrade("B-")}
-        >
-          B-
-        </button>
-        <button
-          className="button1 font-weight-bold"
-          onClick={() => handleClickGrade("C+") && setSelectedGrade("C+")}
-        >
-          C+
-        </button>
-        <button
-          className="button1 font-weight-bold"
-          onClick={() => handleClickGrade("C") && setSelectedGrade("C")}
-        >
-          C
-        </button>
-        <button
-          className="button1 font-weight-bold"
-          onClick={() => handleClickGrade("C-") && setSelectedGrade("C-")}
-        >
-          C-
-        </button>
-										<button
-											onClick={() =>
-												handleClick(course.name, course.code, course.credit)
-											}
-											style={{marginLeft:"10px"}}
-										>
-											Add+
-										</button>
-									</td>
-								</tr>
-							))}
-						</>
+					<>
+						{selectedGroup.subjects.map((course, j) => (
+							<tr key={j}>
+								<td>{selectedGroup.groupName}</td>
+								<td>{course.code}</td>
+								<td>{course.name}</td>
+								{/* <td>{course.grade}</td> */}
+								<td>
+
+									<button
+										className="button1 font-weight-bold"
+										onClick={() => handleClickGrade("A") && setSelectedGrade("A")}
+									>
+										A
+									</button>
+									<button
+										className="button1 font-weight-bold"
+										onClick={() => handleClickGrade("A-") && setSelectedGrade("A-")}
+									>
+										A-
+									</button>
+									<button
+										className="button1 font-weight-bold"
+										onClick={() => handleClickGrade("B+") && setSelectedGrade("B+")}
+									>
+										B+
+									</button>
+									<button
+										className="button1 font-weight-bold"
+										onClick={() => handleClickGrade("B") && setSelectedGrade("B")}
+									>
+										B
+									</button>
+									<button
+										className="button1 font-weight-bold"
+										onClick={() => handleClickGrade("B-") && setSelectedGrade("B-")}
+									>
+										B-
+									</button>
+									<button
+										className="button1 font-weight-bold"
+										onClick={() => handleClickGrade("C+") && setSelectedGrade("C+")}
+									>
+										C+
+									</button>
+									<button
+										className="button1 font-weight-bold"
+										onClick={() => handleClickGrade("C") && setSelectedGrade("C")}
+									>
+										C
+									</button>
+									<button
+										className="button1 font-weight-bold"
+										onClick={() => handleClickGrade("C-") && setSelectedGrade("C-")}
+									>
+										C-
+									</button>
+									<button
+										className="button1 font-weight-bold"
+										onClick={() => handleClickGrade("D") && setSelectedGrade("D")}
+									>
+										D
+									</button>
+									<button
+										className="button1 font-weight-bold"
+										onClick={() => handleClickGrade("F") && setSelectedGrade("F")}
+									>
+										F
+									</button>
+									<button
+										className="button1 font-weight-bold"
+										onClick={() => handleClickGrade("W") && setSelectedGrade("W")}
+									>
+										W
+									</button>
+									<button
+										onClick={() =>
+											handleClick(course.name, course.code, course.credit)
+										}
+										style={{ marginLeft: "10px" }}
+									>
+										Add+
+									</button>
+								</td>
+							</tr>
+						))}
+					</>
 				</tbody>
 			</table>
 
