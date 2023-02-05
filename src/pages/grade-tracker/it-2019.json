@@ -1,17 +1,17 @@
 {
     "curriculum": {
-      "name": "Computer Science",
+      "name": "Information Technology",
       "subjects": [
         {
           "groupName": "None",
           "subjects": []
         },
         {
-          "groupName": "Language Courses",
+          "groupName": "Language Courses but for IT",
           "subjects": [
             {
               "code": "BG 1001",
-              "name": "English I",
+              "name": "English I but for IT",
               "credit": 3
             },
   
