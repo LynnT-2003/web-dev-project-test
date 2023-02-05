@@ -98,23 +98,35 @@ function Page() {
   // handleClick MAIN
   const handleClick = (course, code, credit, sem, year) => {
 
-    if (selectedGrade !== "W") {
+    let subjectExists = false
 
-      setTotalCredits(totalCredits + credit);
-      console.log('total credits', { totalCredits }, { totalCredits }, ' + ', { credit })
-
-      setTotalPoints(totalPoints + credit * selectedGradePoint);
-      console.log('Selected Grade GPA in handleClick', { selectedGradePoint })
-      console.log('total points', { totalPoints })
-
-      setSelectedCourse(course)
-      setGrade(course, selectedGrade)
-
+    for (let i = 0; i < gradeList.length; i++) {
+      if (gradeList[i][1] === code && gradeList[i][4][0] === sem && gradeList[i][4][1] === year) {
+        subjectExists = true
+      }
     }
-    addToGradeList([course, code, credit, selectedGrade, [sem, year], selectedGradePoint])
-    setShowModal(true);
 
-    console.table(gradeList)
+    if (subjectExists) {
+      alert(`Subject code ${code} already exists in Semester ${sem}/${year}!`)
+    } else {
+      if (selectedGrade !== "W") {
+  
+        setTotalCredits(totalCredits + credit);
+        console.log('total credits', { totalCredits }, { totalCredits }, ' + ', { credit })
+  
+        setTotalPoints(totalPoints + credit * selectedGradePoint);
+        console.log('Selected Grade GPA in handleClick', { selectedGradePoint })
+        console.log('total points', { totalPoints })
+  
+        setSelectedCourse(course)
+        setGrade(course, selectedGrade)
+  
+      }
+      addToGradeList([course, code, credit, selectedGrade, [sem, year], selectedGradePoint])
+      setShowModal(true);
+  
+      console.table(gradeList)
+    }
   }
 
   // handleClickGrade to set selectedGradePoint based on grade
