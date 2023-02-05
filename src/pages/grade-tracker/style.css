@@ -2,6 +2,7 @@
     margin: 3px;
     width: 40px;
     height: 40px;
+    background-color: beige;
     /* background-color:#B7383B;
     border-color: #B7383B; */
     /* color: #fff; */
@@ -9,7 +10,7 @@
 }
 
 .button1:hover {
-    opacity: 0.8;
+    opacity: 0.5;
 }
 
 .font-weight-bold {
@@ -53,20 +54,20 @@
     text-align: left;
 }
 
-.td-major{
-    width: 10%;
+.td-group{
+    width: 25%;
 }
 
-.td-group{
-    width: 30%;
+.td-code{
+    width: 10%;
 }
 
 .td-name{
-    width: 40%;
+    width: 25%;
 }
 
 .td-grade{
-    width: 10%;
+    width: 40%;
 }
 
 .th{
