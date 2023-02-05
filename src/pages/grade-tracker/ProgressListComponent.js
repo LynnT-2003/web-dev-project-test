@@ -23,6 +23,9 @@ export default function ProgressListComponent(props) {
                             <td>{item[1]}</td>
                             <td>{item[2]}</td>
                             <td>{item[3]}</td>
+                            <td style={{width:"30px", alignContent:"left"}}>
+                                <Button className="btn btn-danger">Delete</Button>
+                            </td>
                         </tr>
                     )
                 })}
