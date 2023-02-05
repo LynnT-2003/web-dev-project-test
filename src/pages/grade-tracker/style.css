@@ -2,15 +2,41 @@
     margin: 3px;
     width: 40px;
     height: 40px;
-    background-color: beige;
+    background-color: hsl(51, 80%, 90%);
     /* background-color:#B7383B;
     border-color: #B7383B; */
     /* color: #fff; */
-    border-radius: 10px;
+    border-radius: 15px;
 }
 
 .button1:hover {
     opacity: 0.5;
+}
+
+.add-button{
+    width: 80px;
+    height: 35px;
+    border-radius: 15px;
+    background-color: hsl(177, 100%, 14%);
+    color: white;
+    border-width: 0px;
+}
+
+.add-button:hover {
+    opacity: 0.8;
+}
+
+.delete-button{
+    width: 80px;
+    height: 40px;
+    border-radius: 8px;
+    background: hsl(192, 32%, 15%);
+    color: white;
+    border-width: 0px;
+}
+
+.delete-button:hover {
+    opacity: 0.8;
 }
 
 .font-weight-bold {

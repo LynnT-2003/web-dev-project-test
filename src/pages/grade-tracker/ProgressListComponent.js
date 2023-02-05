@@ -4,7 +4,7 @@ import { Modal, Button, Navbar, Nav, NavDropdown, Form } from "react-bootstrap"
 import { useLocalStorage } from "react-use"
 
 export default function ProgressListComponent(props) {
-    const {list} = props
+    const {list, handleDelete} = props
     return (
         <div><table className="table table-striped">
             <thead>
@@ -24,7 +24,11 @@ export default function ProgressListComponent(props) {
                             <td>{item[2]}</td>
                             <td>{item[3]}</td>
                             <td style={{width:"30px", alignContent:"left"}}>
-                                <Button className="btn btn-danger">Delete</Button>
+                                <button
+                                    onClick={handleDelete} 
+                                    className="delete-button">
+                                    Delete
+                                </button>
                             </td>
                         </tr>
                     )

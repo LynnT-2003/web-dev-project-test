@@ -89,6 +89,11 @@ function Page() {
     return gradeList
   }
 
+  // function for removing from gradeList 
+  function removeFromGradeList() {
+    
+  }
+
   // function for adding a grade to a course and storing it in newList
   const setGrade = (course, grade) => {
     setSelectedCourse({ course: course, grade: grade })
@@ -355,6 +360,7 @@ function Page() {
                     W
                   </button>
                   <button
+                    className="add-button"
                     onClick={() => { setSelectedCourse(course.name); setSelectedCourseCode(course.code); setSelectedCourseCredit(course.credit); handleClickShowModal() }
                     }
                     style={{ marginLeft: "10px" }}
