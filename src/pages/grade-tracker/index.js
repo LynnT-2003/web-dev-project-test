@@ -90,8 +90,17 @@ function Page() {
   }
 
   // function for removing from gradeList 
-  function removeFromGradeList() {
-    
+  const removeFromGradeList = (x) => {
+    console.log("removeFromGradeList called")
+    console.log(x)
+    console.log("Before deleting", {gradeList})
+    var myIndex = gradeList.indexOf(x);
+    if (myIndex > -1) {
+      console.log("Index found", {myIndex})
+      gradeList.splice(myIndex,1);
+      setGradeList(gradeList)
+    }
+    console.log("After deleting", {gradeList})
   }
 
   // function for adding a grade to a course and storing it in newList
@@ -218,7 +227,7 @@ function Page() {
         console.log("For loop credit result:", results[semester][i][2])
         console.log("For loop point result:", results[semester][i][5])
         results[semester][results[semester].length-2] += results[semester][i][2] // add total credits
-        results[semester][results[semester].length-1] += results[semester][i][5] // add total points
+        results[semester][results[semester].length-1] += (results[semester][i][5] * results[semester][i][2]) // add total points
       }
     }
     console.log("Results", {results});
@@ -242,8 +251,9 @@ function Page() {
         <div className="main-body welcome-text">
           <GreetingComponent major={selectedMajor} />
           <AccumulativeGPA totalCredits={totalCredits} totalPoints={totalPoints} />
-        </div> <ProgressListComponent list={gradeList} />
+        </div> <ProgressListComponent list={gradeList} handleDelete={removeFromGradeList}/>
       </div>
+      
 
       <FormSelectMajorComponent
         selectedGroup={selectedGroup}

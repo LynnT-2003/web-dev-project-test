@@ -25,7 +25,7 @@ export default function ProgressListComponent(props) {
                             <td>{item[3]}</td>
                             <td style={{width:"30px", alignContent:"left"}}>
                                 <button
-                                    onClick={handleDelete} 
+                                onClick={() => {handleDelete(item)}}
                                     className="delete-button">
                                     Delete
                                 </button>
