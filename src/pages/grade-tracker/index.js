@@ -110,10 +110,12 @@ function Page() {
     var myIndex = gradeList.indexOf(x);
     if (myIndex > -1) {
       console.log("Index found", {myIndex})
+      setTotalCredits(totalCredits-gradeList[myIndex][2])
+      setTotalPoints(totalPoints-(gradeList[myIndex][5]*gradeList[myIndex][2]))
       gradeList.splice(myIndex,1);
       setGradeList(gradeList)
     }
-    console.log("After deleting", {gradeList})
+    console.log("After deleting", {myIndex}, {gradeList})
   }
 
   // function for adding a grade to a course and storing it in newList
