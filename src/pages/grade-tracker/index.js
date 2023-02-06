@@ -284,7 +284,10 @@ function Page() {
 
       {Object.keys(semesterGradeList).map(
         key => <div>
-          <h5 style={{ marginLeft: "50px", marginBottom: "0px", color: "darkgreen" }}>Semester {key}</h5>
+          <h5 style={{ marginLeft: "50px", marginBottom: "0px", color: "darkgreen" }}>
+            Semester {key} [Semester GPA: 
+              {(Object.values(semesterGradeList[key]).slice(-1) / Object.values(semesterGradeList[key])[semesterGradeList[key].length-2]).toFixed(2)}]
+          </h5>
           <table className="table table-striped" style={{ marginTop: "0px" }}>
             <thead>
               <tr>
