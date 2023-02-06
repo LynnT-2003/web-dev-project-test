@@ -10,6 +10,7 @@ import ProgressListComponent from "./ProgressListComponent"
 import FormSelectMajorComponent from "./FormSelectMajorComponent"
 import CurriculumComponent from "./CurriculumComponent"
 
+
 function Page() {
 
   // For Modal and Semester
@@ -35,6 +36,8 @@ function Page() {
     }
   }
 
+  // const for toggling semester
+  const [showSemesters, setShowSemesters] = React.useState(true)
 
   // newList dummy
   const newList = []
@@ -281,30 +284,38 @@ function Page() {
         </div> <ProgressListComponent list={gradeList} handleDelete={removeFromGradeList} />
       </div>
 
+      <div className="semesters">
+        <button
+          className="show-semesters-button"
+          onClick={() => setShowSemesters(!showSemesters)}>
+          Show by semesters
+        </button>
+        {
+          showSemesters ? <div>
 
-      {Object.keys(semesterGradeList).map(
-        key => <div>
-          <h5 style={{ marginLeft: "50px", marginBottom: "0px", color: "darkgreen" }}>
-            Semester {key} [Semester GPA: 
-              {(Object.values(semesterGradeList[key]).slice(-1) / Object.values(semesterGradeList[key])[semesterGradeList[key].length-2]).toFixed(2)}]
-          </h5>
-          <table className="table table-striped" style={{ marginTop: "0px" }}>
-            <thead>
-              <tr>
-                <th>Course Name</th>
-                <th>Course Code</th>
-                <th>Earned Credits</th>
-                <th>Course Grade</th>
-              </tr>
-            </thead>
-            <tbody>
-              {Object.values(semesterGradeList[key]).slice(0, -2).map(x =>
-                <tr>
-                  <td>{x[0]}</td>
-                  <td>{x[1]}</td>
-                  <td>{x[2]}</td>
-                  <td>{x[3]}</td>
-                  {/* <td style={{ width: "30px", alignContent: "left" }}>
+            {Object.keys(semesterGradeList).map(
+              key => <div>
+                <h5 style={{ marginLeft: "2.5%", marginTop:"20px",marginBottom: "5px", color: "darkgreen" }}>
+                  Semester {key} [Semester GPA:
+                  {(Object.values(semesterGradeList[key]).slice(-1) / Object.values(semesterGradeList[key])[semesterGradeList[key].length - 2]).toFixed(2)}]
+                </h5>
+                <table className="table table-hover table-striped" style={{ marginTop: "0px" }}>
+                  <thead className="thead-dark">
+                    <tr>
+                      <th>Course Name</th>
+                      <th>Course Code</th>
+                      <th>Earned Credits</th>
+                      <th>Course Grade</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {Object.values(semesterGradeList[key]).slice(0, -2).map(x =>
+                      <tr>
+                        <td>{x[0]}</td>
+                        <td>{x[1]}</td>
+                        <td>{x[2]}</td>
+                        <td>{x[3]}</td>
+                        {/* <td style={{ width: "30px", alignContent: "left" }}>
                     <button 
                       className="delete-button"
                       onClick={() => {removeFromGradeListV2(x)}}
@@ -312,12 +323,16 @@ function Page() {
                       Delete
                     </button>
                   </td> */}
-                </tr>
-              )}
-            </tbody>
-          </table>
-        </div>
-      )}
+                      </tr>
+                    )}
+                  </tbody>
+                </table>
+              </div>
+            )}
+          </div> : null
+        }
+      </div>
+      
 
 
       <FormSelectMajorComponent
@@ -495,6 +510,7 @@ function Page() {
 
     </>
   )
+
 }
 
 
