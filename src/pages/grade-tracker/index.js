@@ -137,9 +137,11 @@ function Page() {
   
         setSelectedCourse(course)
         setGrade(course, selectedGrade)
-  
+        
+        addToGradeList([course, code, credit, selectedGrade, [sem, year], selectedGradePoint])
+      } else {
+        addToGradeList([course, code, 0, selectedGrade, [sem, year], 0])
       }
-      addToGradeList([course, code, credit, selectedGrade, [sem, year], selectedGradePoint])
       setShowModal(true);
   
       console.table(gradeList)
@@ -235,6 +237,7 @@ function Page() {
     }
     console.log("Results", {results});
     setSemesterGradeList(results)
+    console.log(semesterGradeList)
     
     for (const semester in results) {
       console.log(semester);
@@ -289,8 +292,9 @@ function Page() {
         <thead>
           <tr>
             <th className="th">Subject Group</th>
-            <th className="th">Subject Code</th>
             <th className="th">Subject Name</th>
+            <th className="th">Subject Code</th>
+            <th className="th">Credits</th>
             {/* <th className="th">Grade</th> */}
             <th className="th">Set Grade</th>
           </tr>
@@ -302,8 +306,9 @@ function Page() {
             {selectedGroup.subjects.map((course, j) => (
               <tr key={j}>
                 <td>{selectedGroup.groupName}</td>
-                <td>{course.code}</td>
                 <td>{course.name}</td>
+                <td>{course.code}</td>
+                <td>{course.credit}</td>
                 {/* <td>{course.grade}</td> */}
                 <td>
 
@@ -428,6 +433,26 @@ function Page() {
           </>
         </tbody>
       </table>
+
+
+          {Object.keys(semesterGradeList).map(
+            key => <table className="table table-striped">
+              <thead>
+                <tr>
+                  <th>Semester {key}</th>
+                </tr>
+              </thead>
+              <tbody>
+              {Object.values(semesterGradeList[key]).slice(0,-2).map(x =>
+                <tr>
+                  <td>{x[0]}</td>
+                  <td>{x[1]}</td>
+                  <td>{x[2]}</td>
+                </tr>
+              )}
+              </tbody>
+            </table>
+          )}
 
     </>
   )

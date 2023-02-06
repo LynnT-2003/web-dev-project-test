@@ -11,7 +11,7 @@ export default function ProgressListComponent(props) {
                 <tr>
                     <th>Course Name</th>
                     <th>Course Code</th>
-                    <th>Course Credits</th>
+                    <th>Earned Credits</th>
                     <th>Course Grade</th>
                 </tr>
             </thead>
