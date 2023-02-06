@@ -25,6 +25,16 @@ function Page() {
   const handleSelectYear = (year) => setSelectedYear(year);
   const handleSelectSemester = (semester) => setSelectedSemester(semester);
 
+  // handle no course group selected
+  const handleNoGroupSelected = (x) => {
+    console.log("HandleNoGroupSelected called")
+    console.log(x)
+    if (x === 'None') {
+      return(
+        <h5 style={{marginLeft:"10px", color:"red", fontFamily:"Georgia"}}>No course group selected !</h5>)
+    }
+  }
+
 
   // newList dummy
   const newList = []
@@ -258,9 +268,34 @@ function Page() {
         <div className="main-body welcome-text">
           <GreetingComponent major={selectedMajor} />
           <AccumulativeGPA totalCredits={totalCredits} totalPoints={totalPoints} />
-        </div> <ProgressListComponent list={gradeList} handleDelete={removeFromGradeList}/>
+        </div> <ProgressListComponent list={gradeList} handleDelete={removeFromGradeList} />
       </div>
-      
+
+
+      {Object.keys(semesterGradeList).map(
+        key => <div>
+          <h5 style={{ marginLeft: "50px", marginBottom: "0px", color: "darkgreen" }}>Semester {key}</h5>
+          <table className="table table-striped" style={{ marginTop: "0px" }}>
+            <thead>
+              <tr>
+                <th>Course Name</th>
+                <th>Course Code</th>
+                <th>Earned Credits</th>
+              </tr>
+            </thead>
+            <tbody>
+              {Object.values(semesterGradeList[key]).slice(0, -2).map(x =>
+                <tr>
+                  <td>{x[0]}</td>
+                  <td>{x[1]}</td>
+                  <td>{x[2]}</td>
+                </tr>
+              )}
+            </tbody>
+          </table>
+        </div>
+      )}
+
 
       <FormSelectMajorComponent
         selectedGroup={selectedGroup}
@@ -303,6 +338,7 @@ function Page() {
 
         <tbody>
           <>
+            {handleNoGroupSelected(selectedGroup.groupName)}
             {selectedGroup.subjects.map((course, j) => (
               <tr key={j}>
                 <td>{selectedGroup.groupName}</td>
@@ -433,26 +469,6 @@ function Page() {
           </>
         </tbody>
       </table>
-
-
-          {Object.keys(semesterGradeList).map(
-            key => <table className="table table-striped">
-              <thead>
-                <tr>
-                  <th>Semester {key}</th>
-                </tr>
-              </thead>
-              <tbody>
-              {Object.values(semesterGradeList[key]).slice(0,-2).map(x =>
-                <tr>
-                  <td>{x[0]}</td>
-                  <td>{x[1]}</td>
-                  <td>{x[2]}</td>
-                </tr>
-              )}
-              </tbody>
-            </table>
-          )}
 
     </>
   )

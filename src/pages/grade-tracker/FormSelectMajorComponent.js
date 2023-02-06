@@ -11,10 +11,10 @@ export default function FormSelectMajorComponent(props) {
           <tr>
             <td
               style={{
-                width: "270px",
+                width: "330px",
                 fontFamily: "Georgia",
                 fontSize: "20px",
-              }}>Please select a course group:</td>
+              }}>Please select a course group to add:</td>
             <td style={{
               textAlign: "left"
             }}>

@@ -6,7 +6,9 @@ import { useLocalStorage } from "react-use"
 export default function ProgressListComponent(props) {
     const {list, handleDelete} = props
     return (
-        <div><table className="table table-striped">
+        <div>
+            <h5 style={{ marginLeft: "50px", marginBottom: "0px", color: "darkgreen" }}>All Semesters</h5>
+            <table className="table table-striped" style={{marginTop:"0px"}}>
             <thead>
                 <tr>
                     <th>Course Name</th>
