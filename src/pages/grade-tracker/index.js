@@ -108,6 +108,7 @@ function Page() {
     console.log(x)
     console.log("Before deleting", {gradeList})
     var myIndex = gradeList.indexOf(x);
+    console.log("Index to find for", {x})
     if (myIndex > -1) {
       console.log("Index found", {myIndex})
       setTotalCredits(totalCredits-gradeList[myIndex][2])
@@ -217,6 +218,13 @@ function Page() {
     return groupedResults;
   };
 
+  // Failure
+  const removeFromGradeListV2 = (x) => {
+    const out = gradeList.filter(gradeList => gradeList != x)
+    console.log(gradeList)
+    console.log(x)
+    console.log(out)
+  }
 
   React.useEffect(() => {
     const importJson = async () => {
@@ -293,7 +301,14 @@ function Page() {
                   <td>{x[1]}</td>
                   <td>{x[2]}</td>
                   <td>{x[3]}</td>
-                  <td style={{width:"30px", alignContent:"left"}}><button className="delete-button">Delete</button></td>
+                  <td style={{ width: "30px", alignContent: "left" }}>
+                    <button 
+                      className="delete-button"
+                      onClick={() => {removeFromGradeListV2(x)}}
+                    >
+                      Delete
+                    </button>
+                  </td>
                 </tr>
               )}
             </tbody>
