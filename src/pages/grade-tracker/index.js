@@ -283,6 +283,7 @@ function Page() {
                 <th>Course Name</th>
                 <th>Course Code</th>
                 <th>Earned Credits</th>
+                <th>Course Grade</th>
               </tr>
             </thead>
             <tbody>
@@ -291,6 +292,8 @@ function Page() {
                   <td>{x[0]}</td>
                   <td>{x[1]}</td>
                   <td>{x[2]}</td>
+                  <td>{x[3]}</td>
+                  <td style={{width:"30px", alignContent:"left"}}><button className="delete-button">Delete</button></td>
                 </tr>
               )}
             </tbody>
