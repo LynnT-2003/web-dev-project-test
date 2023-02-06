@@ -62,6 +62,10 @@
     margin-top: 20px;
 }
 
+.semesters{
+    padding: 30px;
+}
+
 .main-title {
     text-align: right;
     margin-right: 45px;
@@ -100,3 +104,20 @@
     text-align: left;
 }
 
+.thead-dark{
+    background-color: hsl(192, 32%, 25%);
+    color:aliceblue;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+}
+
+.show-semesters-button{
+    margin-left: 2.5%;
+    width: 200px;
+    height: 40px;
+    border-radius: 8px;
+    background-color: hsl(192, 35%, 70%);
+    color: black;
+    border-width: 0;
+    font-family: "Roboto", Sans-serif;
+    font-size: large;
+}
