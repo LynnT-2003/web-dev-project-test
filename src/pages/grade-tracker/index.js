@@ -304,14 +304,14 @@ function Page() {
                   <td>{x[1]}</td>
                   <td>{x[2]}</td>
                   <td>{x[3]}</td>
-                  <td style={{ width: "30px", alignContent: "left" }}>
+                  {/* <td style={{ width: "30px", alignContent: "left" }}>
                     <button 
                       className="delete-button"
                       onClick={() => {removeFromGradeListV2(x)}}
                     >
                       Delete
                     </button>
-                  </td>
+                  </td> */}
                 </tr>
               )}
             </tbody>
