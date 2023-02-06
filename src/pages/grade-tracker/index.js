@@ -65,6 +65,9 @@ function Page() {
   // localStorage for gradeList (a list that stores courses and their respective grades)
   const [gradeList, setGradeList] = useLocalStorage("gradeList", [])
 
+  // localStorage for semester
+  const [semesterGradeList, setSemesterGradeList] = useLocalStorage("semesterGradeList",[])
+
   // localStorage for totalPoints
   const [totalPoints, setTotalPoints] = useLocalStorage('Total Points', 0);
 
@@ -231,6 +234,7 @@ function Page() {
       }
     }
     console.log("Results", {results});
+    setSemesterGradeList(results)
     
     for (const semester in results) {
       console.log(semester);
