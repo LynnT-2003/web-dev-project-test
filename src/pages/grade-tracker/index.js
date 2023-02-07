@@ -342,7 +342,6 @@ function Page() {
         setSelectedCourseCredit = {handleSetSelectedCourseCredit}
         selectedCourseCode = {selectedCourseCode}
         selectedCourseCredit = {selectedCourseCredit}
-
       /> */}
 
       <table className="table table-striped">
