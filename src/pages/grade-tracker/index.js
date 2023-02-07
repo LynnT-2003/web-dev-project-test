@@ -8,6 +8,7 @@ import GreetingComponent from "./GreetingComponent"
 import AccumulativeGPA from "./AccumulativeGPA"
 import ProgressListComponent from "./ProgressListComponent"
 import FormSelectMajorComponent from "./FormSelectMajorComponent"
+
 import CurriculumComponent from "./CurriculumComponent"
 
 
@@ -364,12 +365,12 @@ function Page() {
       <table className="table table-striped">
         <thead>
           <tr>
-            <th className="th">Subject Group</th>
-            <th className="th">Subject Name</th>
-            <th className="th">Subject Code</th>
+            <th className="th" style={{}}>Course Group</th>
+            <th className="th">Course Name</th>
+            <th className="th" style={{width:"100px"}}>Code</th>
             <th className="th">Credits</th>
             {/* <th className="th">Grade</th> */}
-            <th className="th">Set Grade</th>
+            <th className="th" style={{width:"640px"}}>Set Grade</th>
           </tr>
 
         </thead>
@@ -507,6 +508,14 @@ function Page() {
           </>
         </tbody>
       </table>
+
+      <footer class="text-center text-lg-start bg-white text-muted">
+        <div className="text-center p-4" style={{backgroundColor:"rgba(0, 0, 0, 0.025)"}}>
+          Web Application Development Project-1 Grade Tracker
+          from: 
+          <a class="text-reset fw-bold" href="https://github.com/LynnT-2003"> Lynn Thit Nyi Nyi</a>
+        </div>
+      </footer>
 
     </>
   )
