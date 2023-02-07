@@ -91,6 +91,9 @@ function Page() {
     setSelectedGroup(group)
   }
 
+  // const hide or show groupCourses
+  const [showGroupCourses, setShowGroupCourses] = React.useState(false)
+
   // function for adding to gradeList (a neccessity to gradeList and setGradeList)
   function addToGradeList(props) {
     gradeList.push(props)
@@ -265,6 +268,14 @@ function Page() {
     setSelectedGroup({ groupName: "None", subjects: [] })
   }, [selectedMajor])
 
+  React.useEffect(()=>{
+    if (selectedGroup.groupName !== 'None') {
+      setShowGroupCourses(true)
+    } else {
+      setShowGroupCourses(false)
+    }
+  },[selectedGroup])
+
   return (
     <>
       <NavbarComponent handleSetSelectedMajor={handleClickSetSelectedMajor} />
@@ -356,151 +367,153 @@ function Page() {
         selectedCourseCredit = {selectedCourseCredit}
       /> */}
 
-      <table className="table table-striped">
+      {showGroupCourses ? <table className="table table-striped">
 
-        <thead>
-          <tr>
-            <th className="th">Course Name</th>
-            <th className="th" style={{width:"100px"}}>Code</th>
-            <th className="th">Credits</th>
-            {/* <th className="th">Grade</th> */}
-            <th className="th" style={{width:"640px"}}>Set Grade</th>
-          </tr>
+<thead>
+  <tr>
+    <th className="th">Course Name</th>
+    <th className="th" style={{width:"100px"}}>Code</th>
+    <th className="th">Credits</th>
+    {/* <th className="th">Grade</th> */}
+    <th className="th" style={{width:"640px"}}>Set Grade</th>
+  </tr>
 
-        </thead>
+</thead>
 
-        <tbody>
-          <>
-            {handleNoGroupSelected(selectedGroup.groupName)}
-            {selectedGroup.subjects.map((course, j) => (
-              <tr key={j}>  
-                <td>{course.name}</td>
-                <td>{course.code}</td>
-                <td>{course.credit}</td>
-                {/* <td>{course.grade}</td> */}
-                <td>
+<tbody>
+  <>
+    {handleNoGroupSelected(selectedGroup.groupName)}
+    {selectedGroup.subjects.map((course, j) => (
+      <tr key={j}>  
+        <td>{course.name}</td>
+        <td>{course.code}</td>
+        <td>{course.credit}</td>
+        {/* <td>{course.grade}</td> */}
+        <td>
 
-                  <button
-                    className="button1 font-weight-bold"
-                    onClick={() => handleClickGrade("A")}
-                  >
-                    A
-                  </button>
-                  <button
-                    className="button1 font-weight-bold"
-                    onClick={() => handleClickGrade("A-")}
-                  >
-                    A-
-                  </button>
-                  <button
-                    className="button1 font-weight-bold"
-                    onClick={() => handleClickGrade("B+")}
-                  >
-                    B+
-                  </button>
-                  <button
-                    className="button1 font-weight-bold"
-                    onClick={() => handleClickGrade("B")}
-                  >
-                    B
-                  </button>
-                  <button
-                    className="button1 font-weight-bold"
-                    onClick={() => handleClickGrade("B-")}
-                  >
-                    B-
-                  </button>
-                  <button
-                    className="button1 font-weight-bold"
-                    onClick={() => handleClickGrade("C+")}
-                  >
-                    C+
-                  </button>
-                  <button
-                    className="button1 font-weight-bold"
-                    onClick={() => handleClickGrade("C")}
-                  >
-                    C
-                  </button>
-                  <button
-                    className="button1 font-weight-bold"
-                    onClick={() => handleClickGrade("C-")}
-                  >
-                    C-
-                  </button>
-                  <button
-                    className="button1 font-weight-bold"
-                    onClick={() => handleClickGrade("D")}
-                  >
-                    D
-                  </button>
-                  <button
-                    className="button1 font-weight-bold"
-                    onClick={() => handleClickGrade("F")}
-                  >
-                    F
-                  </button>
-                  <button
-                    className="button1 font-weight-bold"
-                    onClick={() => handleClickGrade("W")}
-                  >
-                    W
-                  </button>
-                  <button
-                    className="add-button"
-                    onClick={() => { setSelectedCourse(course.name); setSelectedCourseCode(course.code); setSelectedCourseCredit(course.credit); handleClickShowModal() }
-                    }
-                    style={{ marginLeft: "10px" }}
-                  >
-                    Add+
-                  </button>
+          <button
+            className="button1 font-weight-bold"
+            onClick={() => handleClickGrade("A")}
+          >
+            A
+          </button>
+          <button
+            className="button1 font-weight-bold"
+            onClick={() => handleClickGrade("A-")}
+          >
+            A-
+          </button>
+          <button
+            className="button1 font-weight-bold"
+            onClick={() => handleClickGrade("B+")}
+          >
+            B+
+          </button>
+          <button
+            className="button1 font-weight-bold"
+            onClick={() => handleClickGrade("B")}
+          >
+            B
+          </button>
+          <button
+            className="button1 font-weight-bold"
+            onClick={() => handleClickGrade("B-")}
+          >
+            B-
+          </button>
+          <button
+            className="button1 font-weight-bold"
+            onClick={() => handleClickGrade("C+")}
+          >
+            C+
+          </button>
+          <button
+            className="button1 font-weight-bold"
+            onClick={() => handleClickGrade("C")}
+          >
+            C
+          </button>
+          <button
+            className="button1 font-weight-bold"
+            onClick={() => handleClickGrade("C-")}
+          >
+            C-
+          </button>
+          <button
+            className="button1 font-weight-bold"
+            onClick={() => handleClickGrade("D")}
+          >
+            D
+          </button>
+          <button
+            className="button1 font-weight-bold"
+            onClick={() => handleClickGrade("F")}
+          >
+            F
+          </button>
+          <button
+            className="button1 font-weight-bold"
+            onClick={() => handleClickGrade("W")}
+          >
+            W
+          </button>
+          <button
+            className="add-button"
+            onClick={() => { setSelectedCourse(course.name); setSelectedCourseCode(course.code); setSelectedCourseCredit(course.credit); handleClickShowModal() }
+            }
+            style={{ marginLeft: "10px" }}
+          >
+            Add+
+          </button>
 
 
-                  <Modal show={showModal} onHide={handleCloseModal}>
-                    <Modal.Header closeButton>
-                      <Modal.Title>Select Year and Semester</Modal.Title>
-                    </Modal.Header>
-                    <Modal.Body>
-                      <div className="form-group">
-                        <label>Year:</label>
-                        <select
-                          className="form-control"
-                          value={selectedYear}
-                          onChange={(e) => handleSelectYear(e.target.value)}
-                        >
-                          <option value="">Select a year</option>
-                          <option value="2020">2020</option>
-                          <option value="2021">2021</option>
-                          <option value="2022">2022</option>
-                          <option value="2023">2023</option>
-                          <option value="2024">2024</option>
-                        </select>
-                      </div>
-                      <div className="form-group">
-                        <label>Semester:</label>
-                        <select
-                          className="form-control"
-                          value={selectedSemester}
-                          onChange={(e) => handleSelectSemester(e.target.value)}
-                        >
-                          <option value="">Select a semester</option>
-                          <option value="1">1</option>
-                          <option value="2">2</option>
-                        </select>
-                      </div>
-                    </Modal.Body>
-                    <Modal.Footer>
-                      <Button variant="primary" onClick={() => { handleClick(selectedCourse, selectedCourseCode, selectedCourseCredit, selectedSemester, selectedYear); handleCloseModal() }}>
-                        Done
-                      </Button>
-                    </Modal.Footer>
-                  </Modal>
-                </td>
-              </tr>
-            ))}
-          </>
-        </tbody>
-      </table>
+          <Modal show={showModal} onHide={handleCloseModal}>
+            <Modal.Header closeButton>
+              <Modal.Title>Select Year and Semester</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+              <div className="form-group">
+                <label>Year:</label>
+                <select
+                  className="form-control"
+                  value={selectedYear}
+                  onChange={(e) => handleSelectYear(e.target.value)}
+                >
+                  <option value="">Select a year</option>
+                  <option value="2020">2020</option>
+                  <option value="2021">2021</option>
+                  <option value="2022">2022</option>
+                  <option value="2023">2023</option>
+                  <option value="2024">2024</option>
+                </select>
+              </div>
+              <div className="form-group">
+                <label>Semester:</label>
+                <select
+                  className="form-control"
+                  value={selectedSemester}
+                  onChange={(e) => handleSelectSemester(e.target.value)}
+                >
+                  <option value="">Select a semester</option>
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                </select>
+              </div>
+            </Modal.Body>
+            <Modal.Footer>
+              <Button variant="primary" onClick={() => { handleClick(selectedCourse, selectedCourseCode, selectedCourseCredit, selectedSemester, selectedYear); handleCloseModal() }}>
+                Done
+              </Button>
+            </Modal.Footer>
+          </Modal>
+        </td>
+      </tr>
+    ))}
+  </>
+</tbody>
+</table> : null}
+
+      
 
       <footer class="text-center text-lg-start bg-white text-muted">
         <div className="text-center p-4" style={{backgroundColor:"rgba(0, 0, 0, 0.025)"}}>
