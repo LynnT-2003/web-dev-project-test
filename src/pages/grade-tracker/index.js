@@ -262,9 +262,9 @@ function Page() {
 
       <div className="Container">
         <div className="main-body welcome-text" style={{marginLeft:"40px"}} >
-          <GreetingComponent major={selectedMajor}/>
-          <AccumulativeGPA totalCredits={totalCredits} totalPoints={totalPoints} />
-        </div> <ProgressListComponent list={gradeList} handleDelete={removeFromGradeList} />
+          {/* <GreetingComponent major={selectedMajor}/> */}
+          {/* <AccumulativeGPA totalCredits={totalCredits} totalPoints={totalPoints} /> */}
+        </div> <ProgressListComponent list={gradeList} handleDelete={removeFromGradeList} totalCredits={totalCredits} totalPoints={totalPoints} />
       </div>
 
       <div className="semesters" style={{marginLeft:"0px"}}>

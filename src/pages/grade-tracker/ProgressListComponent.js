@@ -2,10 +2,16 @@ import * as React from "react"
 import "bootstrap/dist/css/bootstrap.min.css"
 
 export default function ProgressListComponent(props) {
-    const {list, handleDelete} = props
+    const {list, handleDelete, totalCredits, totalPoints} = props
     return (
         <div>
-            <h5 style={{ marginLeft: "40px", marginBottom: "0px", color: "darkgreen" }}>Completed Courses</h5>
+            <h5 style={{ marginLeft: "40px", marginBottom: "0px", color: "darkgreen" }}>Completed Courses&nbsp;&nbsp;&nbsp;
+            <span className="badge rounded-pill bg-success semester-gpa">
+                Total Credits:&nbsp;{totalCredits}
+            </span>&nbsp;
+            <span className="badge rounded-pill bg-success semester-gpa">
+                Accumulative GPA:&nbsp;{totalPoints/totalCredits}
+            </span></h5>
             <table className="table table-striped" style={{marginTop:"0px"}}>
             <thead>
                 <tr>
