@@ -34,7 +34,7 @@
     width: 80px;
     height: 40px;
     border-radius: 8px;
-    background: hsl(192, 32%, 15%);
+    background: hsl(192, 32%, 30%);
     color: white;
     border-width: 0px;
 }
@@ -116,14 +116,14 @@
 
 .show-semesters-button{
     margin-left: 2.5%;
-    width: 200px;
-    height: 40px;
+    width: 150px;
+    height: 30px;
     border-radius: 8px;
-    background-color: hsl(192, 35%, 70%);
-    color: black;
+    background-color: hsl(192, 32%, 30%);
+    color: white;
     border-width: 0;
     font-family: "Roboto", Sans-serif;
-    font-size: large;
+    font-size: medium;
     margin-top: 10px;
     margin-bottom: 10px;
 }
@@ -138,3 +138,27 @@
     padding-right: 10px;
     margin-top: 5px;
 }
+
+
+footer {
+    background-color: rgba(0, 0, 0, 0.025);
+    bottom: 0;
+    left: 0;
+    position: fixed;
+    right: 0;
+    text-align: center;
+    width: 100%;
+}
+
+.badge-custom {
+    background-color:  #ECE8DD;
+    color: black;
+}
+
+.thead-semester{
+    background-color: #579BB1;
+    color:white
+}
+
+
+  

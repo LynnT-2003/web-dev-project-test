@@ -6,19 +6,20 @@ export default function ProgressListComponent(props) {
     return (
         <div>
             <h5 style={{ marginLeft: "40px", marginBottom: "0px", color: "darkgreen" }}>Completed Courses&nbsp;&nbsp;&nbsp;
-            <span className="badge rounded-pill bg-success semester-gpa">
+            <span className="badge badge-custom rounded-pill semester-gpa">
                 Total Credits:&nbsp;{totalCredits}
             </span>&nbsp;
-            <span className="badge rounded-pill bg-success semester-gpa">
-                Accumulative GPA:&nbsp;{totalPoints/totalCredits}
+            <span className="badge badge-custom rounded-pill semester-gpa">
+                Accumulative GPA:&nbsp;{(totalPoints/totalCredits).toFixed(2)}
             </span></h5>
-            <table className="table table-striped" style={{marginTop:"0px"}}>
-            <thead>
+            <table className="table table-striped" style={{marginTop:"0px", marginBottom:"0px"}}>
+            <thead className="thead-semester">
                 <tr>
                     <th>Course Name</th>
                     <th>Course Code</th>
                     <th>Earned Credits</th>
                     <th>Course Grade</th>
+                    <th></th>
                 </tr>
             </thead>
             <tbody>
