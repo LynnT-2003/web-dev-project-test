@@ -1,6 +1,6 @@
 import * as React from "react"
 import "bootstrap/dist/css/bootstrap.min.css"
-import { Modal, Button, Navbar, Nav, NavDropdown, Form } from "react-bootstrap"
+import { Modal, Button } from "react-bootstrap"
 import { useLocalStorage } from "react-use"
 import "./style.css"
 import NavbarComponent from "./NavbarComponent"
@@ -8,8 +8,6 @@ import GreetingComponent from "./GreetingComponent"
 import AccumulativeGPA from "./AccumulativeGPA"
 import ProgressListComponent from "./ProgressListComponent"
 import FormSelectMajorComponent from "./FormSelectMajorComponent"
-
-import CurriculumComponent from "./CurriculumComponent"
 
 
 function Page() {
@@ -54,21 +52,12 @@ function Page() {
 
   // useState for a selected course
   const [selectedCourse, setSelectedCourse] = React.useState([])
-  const handleSetSelectedCourse = (course) => {
-    setSelectedCourse(course)
-  }
 
   // useState for a selected course code 
   const [selectedCourseCode, setSelectedCourseCode] = React.useState([])
-  const handleSetSelectedCoursecode = (code) => {
-    setSelectedCourse(code)
-  }
 
   // useState for a selected course credit
   const [selectedCourseCredit, setSelectedCourseCredit] = React.useState([])
-  const handleSetSelectedCourseCredit = (credit) => {
-    setSelectedCourse(credit)
-  }
 
   // useState for selectedGrade
   const [selectedGrade, setSelectedGrade] = React.useState([])
@@ -174,6 +163,7 @@ function Page() {
     switch (grade) {
       case "W":
         setSelectedGradePoint(0)
+        break
       case "A":
         setSelectedGradePoint(4)
         break
@@ -221,14 +211,6 @@ function Page() {
     
     return groupedResults;
   };
-
-  // Failure
-  const removeFromGradeListV2 = (x) => {
-    const out = gradeList.filter(gradeList => gradeList != x)
-    console.log(gradeList)
-    console.log(x)
-    console.log(out)
-  }
 
   React.useEffect(() => {
     const importJson = async () => {
@@ -289,7 +271,7 @@ function Page() {
         <button
           className="show-semesters-button"
           onClick={() => setShowSemesters(!showSemesters)}>
-          Group by semesters
+          Show by semesters
         </button>
         {
           showSemesters ? <div>
@@ -511,8 +493,8 @@ function Page() {
       <footer class="text-center text-lg-start bg-white text-muted">
         <div className="text-center p-4" style={{backgroundColor:"rgba(0, 0, 0, 0.025)"}}>
           Web Application Development Project-1 Grade Tracker
-          from: 
-          <a class="text-reset fw-bold" href="https://github.com/LynnT-2003"> Lynn Thit Nyi Nyi</a>
+          from:&nbsp;
+          <a class="text-reset fw-bold" href="https://github.com/LynnT-2003">Lynn Thit Nyi Nyi</a>
         </div>
       </footer>
 

@@ -1,6 +1,5 @@
 import React from 'react'
-import { Modal, Button, Navbar, Nav, NavDropdown, Form } from "react-bootstrap"
-import * as x from "./index" 
+import { Navbar, Nav, NavDropdown } from "react-bootstrap"
 
 export default function NavbarComponent({handleSetSelectedMajor}) {
   return (

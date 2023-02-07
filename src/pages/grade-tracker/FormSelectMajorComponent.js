@@ -1,6 +1,6 @@
 import * as React from "react"
 import "bootstrap/dist/css/bootstrap.min.css"
-import { Modal, Button, Navbar, Nav, NavDropdown, Form } from "react-bootstrap"
+import {Form } from "react-bootstrap"
 
 export default function FormSelectMajorComponent(props) {
   const {selectedGroup, setSelectedGroup, subjectsData} = props

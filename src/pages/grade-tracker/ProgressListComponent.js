@@ -1,7 +1,5 @@
 import * as React from "react"
 import "bootstrap/dist/css/bootstrap.min.css"
-import { Modal, Button, Navbar, Nav, NavDropdown, Form } from "react-bootstrap"
-import { useLocalStorage } from "react-use"
 
 export default function ProgressListComponent(props) {
     const {list, handleDelete} = props
