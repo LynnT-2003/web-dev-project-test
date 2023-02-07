@@ -7,7 +7,7 @@ export default function ProgressListComponent(props) {
     const {list, handleDelete} = props
     return (
         <div>
-            <h5 style={{ marginLeft: "50px", marginBottom: "0px", color: "darkgreen" }}>All Semesters</h5>
+            <h5 style={{ marginLeft: "40px", marginBottom: "0px", color: "darkgreen" }}>Completed Courses</h5>
             <table className="table table-striped" style={{marginTop:"0px"}}>
             <thead>
                 <tr>

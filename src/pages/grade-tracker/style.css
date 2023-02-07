@@ -67,7 +67,8 @@
 }
 
 .semesters{
-    padding: 30px;
+    margin-left: 40px;
+    background-color: aliceblue;
 }
 
 .main-title {
@@ -124,8 +125,17 @@
     border-width: 0;
     font-family: "Roboto", Sans-serif;
     font-size: large;
+    margin-top: 10px;
+    margin-bottom: 10px;
 }
 
 .show-semesters-button:hover{
     opacity: 0.8;
+}
+
+.semester-gpa{
+    font-weight: 500;
+    padding-left: 10px;
+    padding-right: 10px;
+    margin-top: 5px;
 }

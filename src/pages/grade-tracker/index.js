@@ -33,7 +33,7 @@ function Page() {
     console.log(x)
     if (x === 'None') {
       return(
-        <h5 style={{marginLeft:"10px", color:"red", fontFamily:"Georgia"}}>No course group selected !</h5>)
+        <h6 style={{marginLeft:"10px", color:"red", fontFamily:""}}>No course group selected </h6>)
     }
   }
 
@@ -279,26 +279,27 @@ function Page() {
       <NavbarComponent handleSetSelectedMajor={handleClickSetSelectedMajor} />
 
       <div className="Container">
-        <div className="main-body welcome-text">
-          <GreetingComponent major={selectedMajor} />
+        <div className="main-body welcome-text" style={{marginLeft:"40px"}} >
+          <GreetingComponent major={selectedMajor}/>
           <AccumulativeGPA totalCredits={totalCredits} totalPoints={totalPoints} />
         </div> <ProgressListComponent list={gradeList} handleDelete={removeFromGradeList} />
       </div>
 
-      <div className="semesters">
+      <div className="semesters" style={{marginLeft:"0px"}}>
         <button
           className="show-semesters-button"
           onClick={() => setShowSemesters(!showSemesters)}>
-          Show by semesters
+          Group by semesters
         </button>
         {
           showSemesters ? <div>
 
             {Object.keys(semesterGradeList).map(
               key => <div>
-                <h5 style={{ marginLeft: "2.5%", marginTop:"20px",marginBottom: "5px", color: "darkgreen" }}>
-                  Semester {key} [Semester GPA:
-                  {(Object.values(semesterGradeList[key]).slice(-1) / Object.values(semesterGradeList[key])[semesterGradeList[key].length - 2]).toFixed(2)}]
+                <h5 style={{ marginLeft: "2.5%", marginTop:"10px",marginBottom: "5px", color: "darkgreen" }}>
+                  Semester {key} <br/> <span className="badge rounded-pill bg-success semester-gpa">Total Credits:&nbsp;
+                  {(Object.values(semesterGradeList[key])[semesterGradeList[key].length - 2])}</span> <span className="badge rounded-pill bg-success semester-gpa">GPA:&nbsp;
+                  {(Object.values(semesterGradeList[key]).slice(-1) / Object.values(semesterGradeList[key])[semesterGradeList[key].length - 2]).toFixed(2)}</span>
                 </h5>
                 <table className="table table-hover table-striped" style={{ marginTop: "0px" }}>
                   <thead className="thead-dark">
@@ -365,7 +366,6 @@ function Page() {
       <table className="table table-striped">
         <thead>
           <tr>
-            <th className="th" style={{}}>Course Group</th>
             <th className="th">Course Name</th>
             <th className="th" style={{width:"100px"}}>Code</th>
             <th className="th">Credits</th>
@@ -379,8 +379,7 @@ function Page() {
           <>
             {handleNoGroupSelected(selectedGroup.groupName)}
             {selectedGroup.subjects.map((course, j) => (
-              <tr key={j}>
-                <td>{selectedGroup.groupName}</td>
+              <tr key={j}>  
                 <td>{course.name}</td>
                 <td>{course.code}</td>
                 <td>{course.credit}</td>
