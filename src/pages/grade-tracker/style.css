@@ -13,6 +13,10 @@
     opacity: 0.5;
 }
 
+.button1:focus{
+    background-color: aliceblue ;
+}
+
 .add-button{
     width: 80px;
     height: 35px;
@@ -120,4 +124,8 @@
     border-width: 0;
     font-family: "Roboto", Sans-serif;
     font-size: large;
+}
+
+.show-semesters-button:hover{
+    opacity: 0.8;
 }
