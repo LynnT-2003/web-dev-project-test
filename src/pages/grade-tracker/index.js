@@ -25,6 +25,9 @@ function Page() {
   const handleSelectYear = (year) => setSelectedYear(year);
   const handleSelectSemester = (semester) => setSelectedSemester(semester);
 
+  // Handle to hide or show completed courses
+  const [showCompletedCourses, setShowCompletedCourses] = React.useState(false);
+
   // handle no course group selected
   const handleNoGroupSelected = (x) => {
     console.log("HandleNoGroupSelected called")
@@ -36,7 +39,7 @@ function Page() {
   }
 
   // const for toggling semester
-  const [showSemesters, setShowSemesters] = React.useState(true)
+  const [showSemesters, setShowSemesters] = React.useState(false)
 
   // newList dummy
   const newList = []
@@ -250,6 +253,12 @@ function Page() {
       console.table(results[semester]);
     }
 
+    if (gradeList.length>0) {
+      setShowCompletedCourses(true)
+    } else {
+      setShowCompletedCourses(false)
+    }
+
   }, [selectedMajor, selectedGroup, subjectsData, gradeList])
 
   React.useEffect(() => {
@@ -260,6 +269,7 @@ function Page() {
     <>
       <NavbarComponent handleSetSelectedMajor={handleClickSetSelectedMajor} />
 
+      {showCompletedCourses ? <div className="main-show-courses">
       <div className="Container">
         <div className="main-body welcome-text" style={{marginLeft:"40px"}} >
           {/* <GreetingComponent major={selectedMajor}/> */}
@@ -315,7 +325,9 @@ function Page() {
             )}
           </div> : null
         }
-      </div>
+      </div></div> : null}
+
+      
       
 
 
@@ -345,6 +357,7 @@ function Page() {
       /> */}
 
       <table className="table table-striped">
+
         <thead>
           <tr>
             <th className="th">Course Name</th>

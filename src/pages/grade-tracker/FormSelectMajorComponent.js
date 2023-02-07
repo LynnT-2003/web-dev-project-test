@@ -14,7 +14,7 @@ export default function FormSelectMajorComponent(props) {
                 width: "330px",
                 fontFamily: "Georgia",
                 fontSize: "20px",
-              }}>Please select a course group to add:</td>
+              }}>Select a course group to add from:</td>
             <td style={{
               textAlign: "left"
             }}>
