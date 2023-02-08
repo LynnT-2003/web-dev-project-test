@@ -10,8 +10,6 @@ import AccumulativeGPA from "./AccumulativeGPA"
 import ProgressListComponent from "./ProgressListComponent"
 import FormSelectMajorComponent from "./FormSelectMajorComponent"
 
-
-
 import { Line } from 'react-chartjs-2'
 import {
   Chart as ChartJS,
@@ -20,6 +18,16 @@ import {
   LinearScale,
   PointElement
 } from 'chart.js'
+
+
+ChartJS.register(
+  LineElement,
+  CategoryScale,
+  LinearScale,
+  PointElement
+)
+
+
 
 
 function Page() {
@@ -88,6 +96,9 @@ function Page() {
 
   // useState for selectedGradePoint
   const [selectedGradePoint, setSelectedGradePoint] = React.useState(0)
+
+  // useState for chartDataV2
+  const [Chartdatav2, setChartDatav2] = React.useState([])
 
   // localStorage for gradeList (a list that stores courses and their respective grades)
   const [gradeList, setGradeList] = useLocalStorage("gradeList", [])
@@ -286,21 +297,35 @@ function Page() {
   }, [selectedMajor, selectedGroup, subjectsData, gradeList])
 
   React.useEffect(() => {
-    semesterGPAs =[]
-    console.log(semesterGradeList)
+    semesterGPAs = []
+
+
     for (const key in semesterGradeList) {
       console.log(semesterGradeList[key][semesterGradeList[key].length - 1])
       console.log(semesterGradeList[key][semesterGradeList[key].length - 2])
       const theGPA = semesterGradeList[key][semesterGradeList[key].length - 1] / semesterGradeList[key][semesterGradeList[key].length - 2]
       semesterGPAs.push(Number(theGPA.toFixed(2)));
       semesterLabels.push(key);
-
-
     }
+
     console.log("SEMESTER LABELS", semesterLabels)
     console.log("SEMESTER GPAS", semesterGPAs)
-    console.log("LINE CHART DATA", data)
-  },[semesterGradeList])
+    console.log("LINE CHART DATA", Chartdata)
+    console.log("Setting charts data v2", Chartdatav2)
+    console.log(semesterGradeList)
+    console.log(semesterLabels, semesterGPAs)
+
+    setChartDatav2({
+      labels: semesterLabels,
+      datasets: [{
+        data: semesterGPAs,
+        fill: false,
+        borderColor: 'rgb(75, 192, 192)',
+        tension: 0.1
+      }]
+    }
+    )
+  }, [semesterGradeList])
 
   React.useEffect(() => {
     setSelectedGroup({ groupName: "None", subjects: [] })
@@ -314,29 +339,18 @@ function Page() {
     }
   }, [selectedGroup])
 
-  
-
   const Chartdata = {
     labels: semesterLabels,
     datasets: [{
       data: semesterGPAs,
-      backgroundColor: "transparent",
-      borderColor:"#f26c6d",
-      pointBorderColor: 'transparent'
-    } ]
+      fill: false,
+      borderColor: 'rgb(75, 192, 192)',
+      tension: 0.1
+    }]
   }
 
-
-  const dummyData = {
-    labels: ["A","B","C"],
-    datasets: [{
-      data: [2,6,5],
-      backgroundColor: "transparent"
-    }]
-    }
-
   const data = {
-    labels: ["Jan","Jan","Jan","Jan","Jan","Jan","Jan"],
+    labels: ["Jan", "Jan", "Jan", "Jan", "Jan", "Jan", "Jan"],
     datasets: [{
       label: 'My First Dataset',
       data: [65, 59, 80, 81, 56, 55, 40],
@@ -346,25 +360,27 @@ function Page() {
     }]
   };
 
-  return (
-    
-    <div className="custom-container">
 
-      <div>
-        <Line data={data}></Line>
-      </div>
+  return (
+
+    <div className="custom-container">
 
       <NavbarComponent handleSetSelectedMajor={handleClickSetSelectedMajor} />
       <div className="content-body">
 
-        {showCompletedCourses ? <div className="main-show-courses">
+
+        <div style={{ width: "500px", height: "500px", marginBottom:"0px"}}>
+          <Line data={Chartdatav2}></Line>
+        </div>
+
+        {showCompletedCourses ? <div className="main-show-courses" style={{marginTop:"0px"}}>
           <div className="Container">
             <div className="main-body welcome-text" style={{ marginLeft: "40px" }} >
               {/* <GreetingComponent major={selectedMajor}/> */}
               {/* <AccumulativeGPA totalCredits={totalCredits} totalPoints={totalPoints} /> */}
             </div> <ProgressListComponent list={gradeList} handleDelete={removeFromGradeList} totalCredits={totalCredits} totalPoints={totalPoints} />
           </div>
-          
+
 
           <div className="semesters" style={{ marginLeft: "0px" }}>
             <button
@@ -385,10 +401,10 @@ function Page() {
                     <table className="table table-hover table-striped" style={{ marginTop: "0px" }}>
                       <thead className="thead-semester">
                         <tr>
-                          <th style={{width:"40%"}}>Course Name</th>
-                          <th style={{width:"20%"}}>Course Code</th>
-                          <th style={{width:"20%"}}>Earned Credits</th>
-                          <th style={{width:"20%"}}>Course Grade</th>
+                          <th style={{ width: "40%" }}>Course Name</th>
+                          <th style={{ width: "20%" }}>Course Code</th>
+                          <th style={{ width: "20%" }}>Earned Credits</th>
+                          <th style={{ width: "20%" }}>Course Grade</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -412,7 +428,7 @@ function Page() {
                     </table>
 
                   </div>
-                  
+
                 )}
               </div> : null
             }
