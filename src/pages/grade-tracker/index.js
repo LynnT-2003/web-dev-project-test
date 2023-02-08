@@ -369,11 +369,11 @@ function Page() {
       <div className="content-body">
 
 
-        <div style={{ width: "500px", height: "500px", marginBottom:"0px"}}>
+        <div style={{ width: "500px", height: "500px", marginBottom:"100px"}}>
           <Line data={Chartdatav2}></Line>
         </div>
 
-        {showCompletedCourses ? <div className="main-show-courses" style={{marginTop:"0px"}}>
+        {showCompletedCourses ? <div className="main-show-courses">
           <div className="Container">
             <div className="main-body welcome-text" style={{ marginLeft: "40px" }} >
               {/* <GreetingComponent major={selectedMajor}/> */}
