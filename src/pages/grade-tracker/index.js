@@ -367,15 +367,23 @@ function Page() {
 
       <NavbarComponent handleSetSelectedMajor={handleClickSetSelectedMajor} />
       <div className="content-body">
-
-
-        <div style={{ width: "500px", height: "500px", marginBottom:"100px"}}>
-          <Line data={Chartdatav2}></Line>
-        </div>
-
         {showCompletedCourses ? <div className="main-show-courses">
-          <div className="Container">
-            <div className="main-body welcome-text" style={{ marginLeft: "40px" }} >
+
+          <div class="container-fluid" style={{marginBottom:"0px"}}>
+            <div class="row">
+              <div class="col-md-6" style={{ marginBottom: "0px" }}>
+                <div style={{ width: "500px", height: "200px", marginBottom: "70px", marginLeft: "40px" }}>
+                  <h5 className="app-subtitle" style={{ marginTop: "20px", marginBottom: "10px" }}>Your semesterly GPA progress visualized</h5>
+                  <Line data={Chartdatav2}></Line>
+                </div>
+              </div>
+              <div class="col-md-6">
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <div className="main-body welcome-text" style={{ marginLeft: "40px", marginTop:"0px" }} >
               {/* <GreetingComponent major={selectedMajor}/> */}
               {/* <AccumulativeGPA totalCredits={totalCredits} totalPoints={totalPoints} /> */}
             </div> <ProgressListComponent list={gradeList} handleDelete={removeFromGradeList} totalCredits={totalCredits} totalPoints={totalPoints} />
@@ -612,7 +620,7 @@ function Page() {
       </div>
 
       <footer class="text-center text-lg-start bg-white text-muted">
-        <div className="text-center p-4" style={{ backgroundColor: "rgba(0, 0, 0, 0.025)" }}>
+        <div className="text-center p-4" style={{ backgroundColor: "rgba(0, 0, 0, 0.025)"}}>
           A Web Application Development Project
           from:&nbsp;
           <a class="text-reset fw-bold" href="https://github.com/LynnT-2003">Lynn Thit Nyi Nyi</a>
