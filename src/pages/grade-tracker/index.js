@@ -10,59 +10,49 @@ import AccumulativeGPA from "./AccumulativeGPA"
 import ProgressListComponent from "./ProgressListComponent"
 import FormSelectMajorComponent from "./FormSelectMajorComponent"
 
-import { Line } from 'react-chartjs-2'
+import { Line } from "react-chartjs-2"
 import {
   Chart as ChartJS,
   LineElement,
   CategoryScale,
   LinearScale,
-  PointElement
-} from 'chart.js'
+  PointElement,
+} from "chart.js"
 
-
-ChartJS.register(
-  LineElement,
-  CategoryScale,
-  LinearScale,
-  PointElement
-)
-
-
-
+ChartJS.register(LineElement, CategoryScale, LinearScale, PointElement)
 
 function Page() {
-
   // For Modal and Semester
-  const [showModal, setShowModal] = React.useState(false);
-  const [selectedYear, setSelectedYear] = React.useState("");
-  const [selectedSemester, setSelectedSemester] = React.useState("");
+  const [showModal, setShowModal] = React.useState(false)
+  const [selectedYear, setSelectedYear] = React.useState("")
+  const [selectedSemester, setSelectedSemester] = React.useState("")
   // HandleClick to hide or show modal
   const handleClickShowModal = (courseName, courseCode, courseCredit) => {
-    setShowModal(true);
-  };
-  const handleCloseModal = () => setShowModal(false);
+    setShowModal(true)
+  }
+  const handleCloseModal = () => setShowModal(false)
   // Handle for Year and Semester
-  const handleSelectYear = (year) => setSelectedYear(year);
-  const handleSelectSemester = (semester) => setSelectedSemester(semester);
+  const handleSelectYear = year => setSelectedYear(year)
+  const handleSelectSemester = semester => setSelectedSemester(semester)
 
   // Handle to hide or show completed courses
-  const [showCompletedCourses, setShowCompletedCourses] = React.useState(false);
+  const [showCompletedCourses, setShowCompletedCourses] = React.useState(false)
 
   // handle no course group selected
-  const handleNoGroupSelected = (x) => {
+  const handleNoGroupSelected = x => {
     console.log("HandleNoGroupSelected called")
     console.log(x)
-    if (x === 'None') {
+    if (x === "None") {
       return (
-        <h6 style={{ marginLeft: "10px", color: "red", fontFamily: "" }}>No course group selected </h6>)
+        <h6 style={{ marginLeft: "10px", color: "red", fontFamily: "" }}>
+          No course group selected{" "}
+        </h6>
+      )
     }
   }
 
   // const for toggling semester
   const [showSemesters, setShowSemesters] = React.useState(false)
-
-  // var for storing semester gpas
-  let semesterGPAs = []
 
   // var for storing semester labels
   let semesterLabels = []
@@ -80,12 +70,15 @@ function Page() {
   const [selectedMajor, setSelectedMajor] = React.useState("CS")
 
   // useState for all course groups
-  const [selectedGroup, setSelectedGroup] = React.useState({ groupName: 'No group selected', subjects: subjectsData })
+  const [selectedGroup, setSelectedGroup] = React.useState({
+    groupName: "No group selected",
+    subjects: subjectsData,
+  })
 
   // useState for a selected course
   const [selectedCourse, setSelectedCourse] = React.useState([])
 
-  // useState for a selected course code 
+  // useState for a selected course code
   const [selectedCourseCode, setSelectedCourseCode] = React.useState([])
 
   // useState for a selected course credit
@@ -104,22 +97,25 @@ function Page() {
   const [gradeList, setGradeList] = useLocalStorage("gradeList", [])
 
   // localStorage for semester
-  const [semesterGradeList, setSemesterGradeList] = useLocalStorage("semesterGradeList", [])
+  const [semesterGradeList, setSemesterGradeList] = useLocalStorage(
+    "semesterGradeList",
+    []
+  )
 
   // localStorage for totalPoints
-  const [totalPoints, setTotalPoints] = useLocalStorage('Total Points', 0);
+  const [totalPoints, setTotalPoints] = useLocalStorage("Total Points", 0)
 
   // localStorage for totalCredits
-  const [totalCredits, setTotalCredits] = useLocalStorage('Total Credits', 0);
+  const [totalCredits, setTotalCredits] = useLocalStorage("Total Credits", 0)
 
   // localStorage for overallGPA
-  const [overallGPA, setOverallGPA] = useLocalStorage("overallGPA", 0);
+  const [overallGPA, setOverallGPA] = useLocalStorage("overallGPA", 0)
 
-  const handleClickSetSelectedMajor = (major) => {
+  const handleClickSetSelectedMajor = major => {
     setSelectedMajor(major)
   }
 
-  const handleClickSetSelectedGroup = (group) => {
+  const handleClickSetSelectedGroup = group => {
     setSelectedGroup(group)
   }
 
@@ -133,18 +129,20 @@ function Page() {
     return gradeList
   }
 
-  // function for removing from gradeList 
-  const removeFromGradeList = (x) => {
+  // function for removing from gradeList
+  const removeFromGradeList = x => {
     console.log("removeFromGradeList called")
     console.log(x)
     console.log("Before deleting", { gradeList })
-    var myIndex = gradeList.indexOf(x);
+    var myIndex = gradeList.indexOf(x)
     console.log("Index to find for", { x })
     if (myIndex > -1) {
       console.log("Index found", { myIndex })
       setTotalCredits(totalCredits - gradeList[myIndex][2])
-      setTotalPoints(totalPoints - (gradeList[myIndex][5] * gradeList[myIndex][2]))
-      gradeList.splice(myIndex, 1);
+      setTotalPoints(
+        totalPoints - gradeList[myIndex][5] * gradeList[myIndex][2]
+      )
+      gradeList.splice(myIndex, 1)
       setGradeList(gradeList)
     }
     console.log("After deleting", { myIndex }, { gradeList })
@@ -158,11 +156,14 @@ function Page() {
 
   // handleClick MAIN
   const handleClick = (course, code, credit, sem, year) => {
-
     let subjectExists = false
 
     for (let i = 0; i < gradeList.length; i++) {
-      if (gradeList[i][1] === code && gradeList[i][4][0] === sem && gradeList[i][4][1] === year) {
+      if (
+        gradeList[i][1] === code &&
+        gradeList[i][4][0] === sem &&
+        gradeList[i][4][1] === year
+      ) {
         subjectExists = true
       }
     }
@@ -171,22 +172,34 @@ function Page() {
       alert(`Subject code ${code} already exists in Semester ${sem}/${year}!`)
     } else {
       if (selectedGrade !== "W") {
+        setTotalCredits(totalCredits + credit)
+        console.log(
+          "total credits",
+          { totalCredits },
+          { totalCredits },
+          " + ",
+          { credit }
+        )
 
-        setTotalCredits(totalCredits + credit);
-        console.log('total credits', { totalCredits }, { totalCredits }, ' + ', { credit })
-
-        setTotalPoints(totalPoints + credit * selectedGradePoint);
-        console.log('Selected Grade GPA in handleClick', { selectedGradePoint })
-        console.log('total points', { totalPoints })
+        setTotalPoints(totalPoints + credit * selectedGradePoint)
+        console.log("Selected Grade GPA in handleClick", { selectedGradePoint })
+        console.log("total points", { totalPoints })
 
         setSelectedCourse(course)
         setGrade(course, selectedGrade)
 
-        addToGradeList([course, code, credit, selectedGrade, [sem, year], selectedGradePoint])
+        addToGradeList([
+          course,
+          code,
+          credit,
+          selectedGrade,
+          [sem, year],
+          selectedGradePoint,
+        ])
       } else {
         addToGradeList([course, code, 0, selectedGrade, [sem, year], 0])
       }
-      setShowModal(true);
+      setShowModal(true)
 
       console.table(gradeList)
     }
@@ -194,7 +207,7 @@ function Page() {
 
   // handleClickGrade to set selectedGradePoint based on grade
   const handleClickGrade = grade => {
-    console.log('Testing')
+    console.log("Testing")
     setSelectedGrade(grade)
     setGrade(selectedCourse, grade)
 
@@ -230,38 +243,40 @@ function Page() {
         setSelectedGradePoint(1.25)
         break
       case "F":
-        setSelectedGradePoint(1);
+        setSelectedGradePoint(1)
         break
     }
-    console.log('Currently selected grade GPA', { selectedGradePoint })
+    console.log("Currently selected grade GPA", { selectedGradePoint })
   }
 
   // anonymous function for grouping by semester and returning the result
   const groupBySemester = grades => {
-    const groupedResults = {};
+    const groupedResults = {}
     for (const grade of grades) {
-      const semester = `${grade[4][1]}-${grade[4][0]}`;
+      const semester = `${grade[4][1]}-${grade[4][0]}`
       if (!groupedResults[semester]) {
-        groupedResults[semester] = [];
+        groupedResults[semester] = []
       }
-      groupedResults[semester].push(grade);
+      groupedResults[semester].push(grade)
     }
 
-    return groupedResults;
-  };
+    return groupedResults
+  }
 
   React.useEffect(() => {
     const importJson = async () => {
-      const importedJson = await import(`./${selectedMajor.toLowerCase()}-2019.json`)
+      const importedJson = await import(
+        `./${selectedMajor.toLowerCase()}-2019.json`
+      )
       setSubjectsData(importedJson.curriculum.subjects)
       console.log("SubjectsData imported and set for ", { selectedMajor })
     }
     importJson()
-    console.log('selected group changed', { selectedGroup });
+    console.log("selected group changed", { selectedGroup })
     console.log({ subjectsData })
 
     // group by semesters and check result in console
-    const results = groupBySemester(gradeList);
+    const results = groupBySemester(gradeList)
     for (const semester in results) {
       results[semester].push(0)
       results[semester].push(0)
@@ -275,17 +290,19 @@ function Page() {
         console.log("For loop test result:", results[semester][i])
         console.log("For loop credit result:", results[semester][i][2])
         console.log("For loop point result:", results[semester][i][5])
-        results[semester][results[semester].length - 2] += results[semester][i][2] // add total credits
-        results[semester][results[semester].length - 1] += (results[semester][i][5] * results[semester][i][2]) // add total points
+        results[semester][results[semester].length - 2] +=
+          results[semester][i][2] // add total credits
+        results[semester][results[semester].length - 1] +=
+          results[semester][i][5] * results[semester][i][2] // add total points
       }
     }
-    console.log("Results", { results });
+    console.log("Results", { results })
     setSemesterGradeList(results)
     console.log(semesterGradeList)
 
     for (const semester in results) {
-      console.log(semester);
-      console.table(results[semester]);
+      console.log(semester)
+      console.table(results[semester])
     }
 
     if (gradeList.length > 0) {
@@ -293,46 +310,75 @@ function Page() {
     } else {
       setShowCompletedCourses(false)
     }
-
   }, [selectedMajor, selectedGroup, subjectsData, gradeList])
 
-  React.useEffect(() => {
-    semesterGPAs = []
+  const [semesterGPAsState, setSemesterGPAsState] = React.useState([])
+  const [semesterLabelsState, setSemesterLabelsState] = React.useState([])
 
+  const labels = []
+  const semGPAs = []
 
-    for (const key in semesterGradeList) {
-      console.log(semesterGradeList[key][semesterGradeList[key].length - 1])
-      console.log(semesterGradeList[key][semesterGradeList[key].length - 2])
-      const theGPA = semesterGradeList[key][semesterGradeList[key].length - 1] / semesterGradeList[key][semesterGradeList[key].length - 2]
-      semesterGPAs.push(Number(theGPA.toFixed(2)));
-      semesterLabels.push(key);
-    }
+  for (const key in semesterGradeList) {
+    console.log(semesterGradeList[key][semesterGradeList[key].length - 1])
+    console.log(semesterGradeList[key][semesterGradeList[key].length - 2])
+    const theGPA =
+      semesterGradeList[key][semesterGradeList[key].length - 1] /
+      semesterGradeList[key][semesterGradeList[key].length - 2]
+    semGPAs.push(Number(theGPA.toFixed(2)))
+    labels.push(key)
+  }
+  const data = {
+    labels: labels,
+    datasets: [
+      {
+        data: semGPAs,
+        borderColor: "rgb(53, 162, 235)",
+        backgroundColor: "rgba(53, 162, 235, 0.5)",
+        cubicInterpolationMode: "monotone",
+      },
+    ],
+  }
 
-    console.log("SEMESTER LABELS", semesterLabels)
-    console.log("SEMESTER GPAS", semesterGPAs)
-    console.log("LINE CHART DATA", Chartdata)
-    console.log("Setting charts data v2", Chartdatav2)
-    console.log(semesterGradeList)
-    console.log(semesterLabels, semesterGPAs)
+  // React.useEffect(() => {
+  //   for (const key in semesterGradeList) {
+  //     console.log(semesterGradeList[key][semesterGradeList[key].length - 1])
+  //     console.log(semesterGradeList[key][semesterGradeList[key].length - 2])
+  //     const theGPA =
+  //       semesterGradeList[key][semesterGradeList[key].length - 1] /
+  //       semesterGradeList[key][semesterGradeList[key].length - 2]
+  //     semesterGPAsState.push(Number(theGPA.toFixed(2)))
+  //     semesterLabelsState.push(key)
+  //   }
 
-    setChartDatav2({
-      labels: semesterLabels,
-      datasets: [{
-        data: semesterGPAs,
-        fill: false,
-        borderColor: 'rgb(75, 192, 192)',
-        tension: 0.1
-      }]
-    }
-    )
-  }, [semesterGradeList])
+  //   // console.log("SEMESTER LABELS", semesterLabels)
+  //   // console.log("SEMESTER GPAS", semesterGPAs)
+  //   // console.log("LINE CHART DATA", Chartdata)
+  //   // console.log("Setting charts data v2", Chartdatav2)
+  //   // console.log(semesterGradeList)
+  //   // console.log(semesterLabels, semesterGPAs)
+
+  //   setSemesterGPAsState([...semesterGPAsState])
+  //   setSemesterLabelsState([...semesterLabelsState])
+
+  //   setChartDatav2({
+  //     labels: semesterLabelsState,
+  //     datasets: [
+  //       {
+  //         data: semesterGPAsState,
+  //         fill: false,
+  //         borderColor: "rgb(75, 192, 192)",
+  //         tension: 0.1,
+  //       },
+  //     ],
+  //   })
+  // }, [semesterGradeList])
 
   React.useEffect(() => {
     setSelectedGroup({ groupName: "None", subjects: [] })
   }, [selectedMajor])
 
   React.useEffect(() => {
-    if (selectedGroup.groupName !== 'None') {
+    if (selectedGroup.groupName !== "None") {
       setShowGroupCourses(true)
     } else {
       setShowGroupCourses(false)
@@ -340,89 +386,138 @@ function Page() {
   }, [selectedGroup])
 
   const Chartdata = {
-    labels: semesterLabels,
-    datasets: [{
-      data: semesterGPAs,
-      fill: false,
-      borderColor: 'rgb(75, 192, 192)',
-      tension: 0.1
-    }]
+    labels: semesterLabelsState,
+    datasets: [
+      {
+        data: semesterGPAsState,
+        fill: false,
+        borderColor: "rgb(75, 192, 192)",
+        tension: 0.1,
+      },
+    ],
   }
 
-  const data = {
+  const data2 = {
     labels: ["Jan", "Jan", "Jan", "Jan", "Jan", "Jan", "Jan"],
-    datasets: [{
-      label: 'My First Dataset',
-      data: [65, 59, 80, 81, 56, 55, 40],
-      fill: false,
-      borderColor: 'rgb(75, 192, 192)',
-      tension: 0.1
-    }]
-  };
-
+    datasets: [
+      {
+        label: "My First Dataset",
+        data: [65, 59, 80, 81, 56, 55, 40],
+        fill: false,
+        borderColor: "rgb(75, 192, 192)",
+        tension: 0.1,
+      },
+    ],
+  }
 
   return (
-
     <div className="custom-container">
-
       <NavbarComponent handleSetSelectedMajor={handleClickSetSelectedMajor} />
-      <div className="content-body">
-        {showCompletedCourses ? <div className="main-show-courses">
 
-          <div class="container-fluid" style={{marginBottom:"0px"}}>
-            <div class="row">
-              <div class="col-md-6" style={{ marginBottom: "0px" }}>
-                <div style={{ width: "500px", height: "200px", marginBottom: "70px", marginLeft: "40px" }}>
-                  <h5 className="app-subtitle" style={{ marginTop: "20px", marginBottom: "10px" }}>Your semesterly GPA progress visualized</h5>
-                  <Line data={Chartdatav2}></Line>
-                </div>
-              </div>
-              <div class="col-md-6">
+      <div className="content-body">
+        <div class="container-fluid" style={{ marginBottom: "0px" }}>
+          <div class="row">
+            <div class="col-md-6" style={{ marginBottom: "0px" }}>
+              <div
+                style={{
+                  width: "500px",
+                  height: "200px",
+                  marginBottom: "70px",
+                  marginLeft: "40px",
+                }}
+              >
+                <h5
+                  className="app-subtitle"
+                  style={{ marginTop: "20px", marginBottom: "10px" }}
+                >
+                  Your semesterly GPA progress visualized
+                </h5>
+                <Line data={data}></Line>
               </div>
             </div>
+            <div class="col-md-6"></div>
           </div>
+        </div>
 
-          <div>
-            <div className="main-body welcome-text" style={{ marginLeft: "40px", marginTop:"0px" }} >
-              {/* <GreetingComponent major={selectedMajor}/> */}
-              {/* <AccumulativeGPA totalCredits={totalCredits} totalPoints={totalPoints} /> */}
-            </div> <ProgressListComponent list={gradeList} handleDelete={removeFromGradeList} totalCredits={totalCredits} totalPoints={totalPoints} />
-          </div>
+        <div style={{ height: "280px", marginTop: "0px" }}></div>
+        {showCompletedCourses ? (
+          <div className="main-show-courses">
+            <div>
+              <div
+                className="main-body welcome-text"
+                style={{ marginLeft: "40px", marginTop: "0px" }}
+              >
+                {/* <GreetingComponent major={selectedMajor}/> */}
+                {/* <AccumulativeGPA totalCredits={totalCredits} totalPoints={totalPoints} /> */}
+              </div>{" "}
+              <ProgressListComponent
+                list={gradeList}
+                handleDelete={removeFromGradeList}
+                totalCredits={totalCredits}
+                totalPoints={totalPoints}
+              />
+            </div>
 
-
-          <div className="semesters" style={{ marginLeft: "0px" }}>
-            <button
-              className="show-semesters-button"
-              onClick={() => setShowSemesters(!showSemesters)}>
-              Show semesters
-            </button>
-            {
-              showSemesters ? <div>
-
-                {Object.keys(semesterGradeList).map(
-                  key => <div>
-                    <h5 style={{ marginLeft: "2.5%", marginTop: "10px", marginBottom: "5px", color: "darkgreen" }}>
-                      Semester {key} &nbsp;&nbsp;&nbsp; <span className="badge badge-custom rounded-pill semester-gpa">Credits:&nbsp;
-                        {(Object.values(semesterGradeList[key])[semesterGradeList[key].length - 2])}</span> <span className="badge rounded-pill badge-custom semester-gpa">GPA:&nbsp;
-                        {(Object.values(semesterGradeList[key]).slice(-1) / Object.values(semesterGradeList[key])[semesterGradeList[key].length - 2]).toFixed(2)}</span>
-                    </h5>
-                    <table className="table table-hover table-striped" style={{ marginTop: "0px" }}>
-                      <thead className="thead-semester">
-                        <tr>
-                          <th style={{ width: "40%" }}>Course Name</th>
-                          <th style={{ width: "20%" }}>Course Code</th>
-                          <th style={{ width: "20%" }}>Earned Credits</th>
-                          <th style={{ width: "20%" }}>Course Grade</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {Object.values(semesterGradeList[key]).slice(0, -2).map(x =>
-                          <tr className="table-info">
-                            <td>{x[0]}</td>
-                            <td>{x[1]}</td>
-                            <td>{x[2]}</td>
-                            <td>{x[3]}</td>
-                            {/* <td style={{ width: "30px", alignContent: "left" }}>
+            <div className="semesters" style={{ marginLeft: "0px" }}>
+              <button
+                className="show-semesters-button"
+                onClick={() => setShowSemesters(!showSemesters)}
+              >
+                Show semesters
+              </button>
+              {showSemesters ? (
+                <div>
+                  {Object.keys(semesterGradeList).map(key => (
+                    <div>
+                      <h5
+                        style={{
+                          marginLeft: "2.5%",
+                          marginTop: "10px",
+                          marginBottom: "5px",
+                          color: "darkgreen",
+                        }}
+                      >
+                        Semester {key} &nbsp;&nbsp;&nbsp;{" "}
+                        <span className="badge badge-custom rounded-pill semester-gpa">
+                          Credits:&nbsp;
+                          {
+                            Object.values(semesterGradeList[key])[
+                              semesterGradeList[key].length - 2
+                            ]
+                          }
+                        </span>{" "}
+                        <span className="badge rounded-pill badge-custom semester-gpa">
+                          GPA:&nbsp;
+                          {(
+                            Object.values(semesterGradeList[key]).slice(-1) /
+                            Object.values(semesterGradeList[key])[
+                              semesterGradeList[key].length - 2
+                            ]
+                          ).toFixed(2)}
+                        </span>
+                      </h5>
+                      <table
+                        className="table table-hover table-striped"
+                        style={{ marginTop: "0px" }}
+                      >
+                        <thead className="thead-semester">
+                          <tr>
+                            <th style={{ width: "40%" }}>Course Name</th>
+                            <th style={{ width: "20%" }}>Course Code</th>
+                            <th style={{ width: "20%" }}>Earned Credits</th>
+                            <th style={{ width: "20%" }}>Course Grade</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {Object.values(semesterGradeList[key])
+                            .slice(0, -2)
+                            .map(x => (
+                              <tr className="table-info">
+                                <td>{x[0]}</td>
+                                <td>{x[1]}</td>
+                                <td>{x[2]}</td>
+                                <td>{x[3]}</td>
+                                {/* <td style={{ width: "30px", alignContent: "left" }}>
                     <button 
                       className="delete-button"
                       onClick={() => {removeFromGradeListV2(x)}}
@@ -430,21 +525,17 @@ function Page() {
                       Delete
                     </button>
                   </td> */}
-                          </tr>
-                        )}
-                      </tbody>
-                    </table>
-
-                  </div>
-
-                )}
-              </div> : null
-            }
-          </div></div> : null}
-
-
-
-
+                              </tr>
+                            ))}
+                        </tbody>
+                      </table>
+                    </div>
+                  ))}
+                </div>
+              ) : null}
+            </div>
+          </div>
+        ) : null}
 
         <FormSelectMajorComponent
           selectedGroup={selectedGroup}
@@ -471,167 +562,186 @@ function Page() {
         selectedCourseCredit = {selectedCourseCredit}
       /> */}
 
-        {showGroupCourses ? <table className="table table-striped">
+        {showGroupCourses ? (
+          <table className="table table-striped">
+            <thead>
+              <tr>
+                <th className="th">Course Name</th>
+                <th className="th" style={{ width: "100px" }}>
+                  Code
+                </th>
+                <th className="th">Credits</th>
+                {/* <th className="th">Grade</th> */}
+                <th className="th" style={{ width: "640px" }}>
+                  Set Grade
+                </th>
+              </tr>
+            </thead>
 
-          <thead>
-            <tr>
-              <th className="th">Course Name</th>
-              <th className="th" style={{ width: "100px" }}>Code</th>
-              <th className="th">Credits</th>
-              {/* <th className="th">Grade</th> */}
-              <th className="th" style={{ width: "640px" }}>Set Grade</th>
-            </tr>
+            <tbody>
+              <>
+                {handleNoGroupSelected(selectedGroup.groupName)}
+                {selectedGroup.subjects.map((course, j) => (
+                  <tr key={j}>
+                    <td>{course.name}</td>
+                    <td>{course.code}</td>
+                    <td>{course.credit}</td>
+                    {/* <td>{course.grade}</td> */}
+                    <td>
+                      <button
+                        className="button1 font-weight-bold"
+                        onClick={() => handleClickGrade("A")}
+                      >
+                        A
+                      </button>
+                      <button
+                        className="button1 font-weight-bold"
+                        onClick={() => handleClickGrade("A-")}
+                      >
+                        A-
+                      </button>
+                      <button
+                        className="button1 font-weight-bold"
+                        onClick={() => handleClickGrade("B+")}
+                      >
+                        B+
+                      </button>
+                      <button
+                        className="button1 font-weight-bold"
+                        onClick={() => handleClickGrade("B")}
+                      >
+                        B
+                      </button>
+                      <button
+                        className="button1 font-weight-bold"
+                        onClick={() => handleClickGrade("B-")}
+                      >
+                        B-
+                      </button>
+                      <button
+                        className="button1 font-weight-bold"
+                        onClick={() => handleClickGrade("C+")}
+                      >
+                        C+
+                      </button>
+                      <button
+                        className="button1 font-weight-bold"
+                        onClick={() => handleClickGrade("C")}
+                      >
+                        C
+                      </button>
+                      <button
+                        className="button1 font-weight-bold"
+                        onClick={() => handleClickGrade("C-")}
+                      >
+                        C-
+                      </button>
+                      <button
+                        className="button1 font-weight-bold"
+                        onClick={() => handleClickGrade("D")}
+                      >
+                        D
+                      </button>
+                      <button
+                        className="button1 font-weight-bold"
+                        onClick={() => handleClickGrade("F")}
+                      >
+                        F
+                      </button>
+                      <button
+                        className="button1 font-weight-bold"
+                        onClick={() => handleClickGrade("W")}
+                      >
+                        W
+                      </button>
+                      <button
+                        className="add-button"
+                        onClick={() => {
+                          setSelectedCourse(course.name)
+                          setSelectedCourseCode(course.code)
+                          setSelectedCourseCredit(course.credit)
+                          handleClickShowModal()
+                        }}
+                        style={{ marginLeft: "10px" }}
+                      >
+                        Add+
+                      </button>
 
-          </thead>
-
-          <tbody>
-            <>
-              {handleNoGroupSelected(selectedGroup.groupName)}
-              {selectedGroup.subjects.map((course, j) => (
-                <tr key={j}>
-                  <td>{course.name}</td>
-                  <td>{course.code}</td>
-                  <td>{course.credit}</td>
-                  {/* <td>{course.grade}</td> */}
-                  <td>
-
-                    <button
-                      className="button1 font-weight-bold"
-                      onClick={() => handleClickGrade("A")}
-                    >
-                      A
-                    </button>
-                    <button
-                      className="button1 font-weight-bold"
-                      onClick={() => handleClickGrade("A-")}
-                    >
-                      A-
-                    </button>
-                    <button
-                      className="button1 font-weight-bold"
-                      onClick={() => handleClickGrade("B+")}
-                    >
-                      B+
-                    </button>
-                    <button
-                      className="button1 font-weight-bold"
-                      onClick={() => handleClickGrade("B")}
-                    >
-                      B
-                    </button>
-                    <button
-                      className="button1 font-weight-bold"
-                      onClick={() => handleClickGrade("B-")}
-                    >
-                      B-
-                    </button>
-                    <button
-                      className="button1 font-weight-bold"
-                      onClick={() => handleClickGrade("C+")}
-                    >
-                      C+
-                    </button>
-                    <button
-                      className="button1 font-weight-bold"
-                      onClick={() => handleClickGrade("C")}
-                    >
-                      C
-                    </button>
-                    <button
-                      className="button1 font-weight-bold"
-                      onClick={() => handleClickGrade("C-")}
-                    >
-                      C-
-                    </button>
-                    <button
-                      className="button1 font-weight-bold"
-                      onClick={() => handleClickGrade("D")}
-                    >
-                      D
-                    </button>
-                    <button
-                      className="button1 font-weight-bold"
-                      onClick={() => handleClickGrade("F")}
-                    >
-                      F
-                    </button>
-                    <button
-                      className="button1 font-weight-bold"
-                      onClick={() => handleClickGrade("W")}
-                    >
-                      W
-                    </button>
-                    <button
-                      className="add-button"
-                      onClick={() => { setSelectedCourse(course.name); setSelectedCourseCode(course.code); setSelectedCourseCredit(course.credit); handleClickShowModal() }
-                      }
-                      style={{ marginLeft: "10px" }}
-                    >
-                      Add+
-                    </button>
-
-
-                    <Modal show={showModal} onHide={handleCloseModal}>
-                      <Modal.Header closeButton>
-                        <Modal.Title>Select Year and Semester</Modal.Title>
-                      </Modal.Header>
-                      <Modal.Body>
-                        <div className="form-group">
-                          <label>Year:</label>
-                          <select
-                            className="form-control"
-                            value={selectedYear}
-                            onChange={(e) => handleSelectYear(e.target.value)}
+                      <Modal show={showModal} onHide={handleCloseModal}>
+                        <Modal.Header closeButton>
+                          <Modal.Title>Select Year and Semester</Modal.Title>
+                        </Modal.Header>
+                        <Modal.Body>
+                          <div className="form-group">
+                            <label>Year:</label>
+                            <select
+                              className="form-control"
+                              value={selectedYear}
+                              onChange={e => handleSelectYear(e.target.value)}
+                            >
+                              <option value="">Select a year</option>
+                              <option value="2020">2020</option>
+                              <option value="2021">2021</option>
+                              <option value="2022">2022</option>
+                              <option value="2023">2023</option>
+                              <option value="2024">2024</option>
+                            </select>
+                          </div>
+                          <div className="form-group">
+                            <label>Semester:</label>
+                            <select
+                              className="form-control"
+                              value={selectedSemester}
+                              onChange={e =>
+                                handleSelectSemester(e.target.value)
+                              }
+                            >
+                              <option value="">Select a semester</option>
+                              <option value="1">1</option>
+                              <option value="2">2</option>
+                            </select>
+                          </div>
+                        </Modal.Body>
+                        <Modal.Footer>
+                          <Button
+                            variant="primary"
+                            onClick={() => {
+                              handleClick(
+                                selectedCourse,
+                                selectedCourseCode,
+                                selectedCourseCredit,
+                                selectedSemester,
+                                selectedYear
+                              )
+                              handleCloseModal()
+                            }}
                           >
-                            <option value="">Select a year</option>
-                            <option value="2020">2020</option>
-                            <option value="2021">2021</option>
-                            <option value="2022">2022</option>
-                            <option value="2023">2023</option>
-                            <option value="2024">2024</option>
-                          </select>
-                        </div>
-                        <div className="form-group">
-                          <label>Semester:</label>
-                          <select
-                            className="form-control"
-                            value={selectedSemester}
-                            onChange={(e) => handleSelectSemester(e.target.value)}
-                          >
-                            <option value="">Select a semester</option>
-                            <option value="1">1</option>
-                            <option value="2">2</option>
-                          </select>
-                        </div>
-                      </Modal.Body>
-                      <Modal.Footer>
-                        <Button variant="primary" onClick={() => { handleClick(selectedCourse, selectedCourseCode, selectedCourseCredit, selectedSemester, selectedYear); handleCloseModal() }}>
-                          Done
-                        </Button>
-                      </Modal.Footer>
-                    </Modal>
-                  </td>
-                </tr>
-              ))}
-            </>
-          </tbody>
-        </table> : null}
-
+                            Done
+                          </Button>
+                        </Modal.Footer>
+                      </Modal>
+                    </td>
+                  </tr>
+                ))}
+              </>
+            </tbody>
+          </table>
+        ) : null}
       </div>
 
       <footer class="text-center text-lg-start bg-white text-muted">
-        <div className="text-center p-4" style={{ backgroundColor: "rgba(0, 0, 0, 0.025)"}}>
-          A Web Application Development Project
-          from:&nbsp;
-          <a class="text-reset fw-bold" href="https://github.com/LynnT-2003">Lynn Thit Nyi Nyi</a>
+        <div
+          className="text-center p-4"
+          style={{ backgroundColor: "rgba(0, 0, 0, 0.025)" }}
+        >
+          A Web Application Development Project from:&nbsp;
+          <a class="text-reset fw-bold" href="https://github.com/LynnT-2003">
+            Lynn Thit Nyi Nyi
+          </a>
         </div>
       </footer>
-
     </div>
   )
-
 }
 
-
-
-export default Page 
+export default Page
