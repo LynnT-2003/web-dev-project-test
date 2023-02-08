@@ -12,29 +12,29 @@ export default function ProgressListComponent(props) {
             <span className="badge badge-custom rounded-pill semester-gpa">
                 Accumulative GPA:&nbsp;{(totalPoints/totalCredits).toFixed(2)}
             </span></h5>
-            <table className="table table-striped" style={{marginTop:"0px", marginBottom:"0px"}}>
+            <table className="table" style={{marginTop:"5px", marginBottom:"0px"}}>
             <thead className="thead-semester">
                 <tr>
-                    <th>Course Name</th>
-                    <th>Course Code</th>
-                    <th>Earned Credits</th>
-                    <th>Course Grade</th>
-                    <th></th>
+                    <th style={{width:"15%"}}>Course Code</th>
+                    <th style={{width:"35%"}}>Course Name</th>
+                    <th style={{width:"20%"}}>Earned Credits</th>
+                    <th style={{width:"20%"}}>Course Grade</th>
+                    <th style={{width:"10%"}}></th>
                 </tr>
             </thead>
             <tbody>
                 {list.map((item, i) => {
                     return (
-                        <tr key={i}>
-                            <td>{item[0]}</td>
+                        <tr key={i} style={{backgroundColor:"#caf0f8"}}>
                             <td>{item[1]}</td>
+                            <td>{item[0]}</td>
                             <td>{item[2]}</td>
                             <td>{item[3]}</td>
                             <td style={{width:"30px", alignContent:"left"}}>
                                 <button
                                 onClick={() => {handleDelete(item); console.log("Deleted item:", item)}}
                                     className="delete-button">
-                                    Delete
+                                    Remove
                                 </button>
                             </td>
                         </tr>

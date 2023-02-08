@@ -3,7 +3,7 @@ import { Navbar, Nav, NavDropdown } from "react-bootstrap"
 
 export default function NavbarComponent({handleSetSelectedMajor}) {
   return (
-    <Navbar bg="light" expand="lg">
+    <Navbar expand="lg" style={{backgroundColor:"#caf0f8"}}>
       <Navbar.Brand className="my-margin app-title" href="#grade-tracker">
         Grade Tracker
       </Navbar.Brand>

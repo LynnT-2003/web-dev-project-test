@@ -31,16 +31,19 @@
 }
 
 .delete-button{
-    width: 80px;
-    height: 40px;
+    width: 90px;
+    height: 30px;
     border-radius: 8px;
-    background: hsl(192, 32%, 30%);
+    background: hsl(193, 25%, 33%);
     color: white;
     border-width: 0px;
 }
 
 .delete-button:hover {
-    opacity: 0.8;
+    background-color: red;
+    color: white;
+    font-weight: 700;
+    font-size: medium;
 }
 
 .font-weight-bold {
@@ -76,8 +79,7 @@
 }
 
 .my-margin{
-    margin-left: 30px;
-    margin-right: 30px;
+    margin-left: 50px;
 }
 
 .table{
@@ -160,5 +162,19 @@ footer {
     color:white
 }
 
+th {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.content-body{
+    background-color: white;
+    margin-bottom: 72px;
+    margin-left: 3%;
+    margin-right: 3%;
+}
+
+.custom-container{
+    background-color: white;
+}
 
   
