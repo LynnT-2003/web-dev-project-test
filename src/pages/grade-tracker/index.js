@@ -2,12 +2,24 @@ import * as React from "react"
 import "bootstrap/dist/css/bootstrap.min.css"
 import { Modal, Button } from "react-bootstrap"
 import { useLocalStorage } from "react-use"
+
 import "./style.css"
 import NavbarComponent from "./NavbarComponent"
 import GreetingComponent from "./GreetingComponent"
 import AccumulativeGPA from "./AccumulativeGPA"
 import ProgressListComponent from "./ProgressListComponent"
 import FormSelectMajorComponent from "./FormSelectMajorComponent"
+
+
+
+import { Line } from 'react-chartjs-2'
+import {
+  Chart as ChartJS,
+  LineElement,
+  CategoryScale,
+  LinearScale,
+  PointElement
+} from 'chart.js'
 
 
 function Page() {
@@ -48,7 +60,7 @@ function Page() {
   let semesterLabels = []
 
   // var for lineChart data
-  let lineChartData = {}
+  // let data = {}
 
   // newList dummy
   const newList = []
@@ -282,14 +294,12 @@ function Page() {
       const theGPA = semesterGradeList[key][semesterGradeList[key].length - 1] / semesterGradeList[key][semesterGradeList[key].length - 2]
       semesterGPAs.push(Number(theGPA.toFixed(2)));
       semesterLabels.push(key);
-      lineChartData = {
-        semesterLabels,
-        semesterGPAs
-      }
+
+
     }
     console.log("SEMESTER LABELS", semesterLabels)
     console.log("SEMESTER GPAS", semesterGPAs)
-    console.log("LINE CHART DATA", lineChartData)
+    console.log("LINE CHART DATA", data)
   },[semesterGradeList])
 
   React.useEffect(() => {
@@ -304,8 +314,46 @@ function Page() {
     }
   }, [selectedGroup])
 
+  
+
+  const Chartdata = {
+    labels: semesterLabels,
+    datasets: [{
+      data: semesterGPAs,
+      backgroundColor: "transparent",
+      borderColor:"#f26c6d",
+      pointBorderColor: 'transparent'
+    } ]
+  }
+
+
+  const dummyData = {
+    labels: ["A","B","C"],
+    datasets: [{
+      data: [2,6,5],
+      backgroundColor: "transparent"
+    }]
+    }
+
+  const data = {
+    labels: ["Jan","Jan","Jan","Jan","Jan","Jan","Jan"],
+    datasets: [{
+      label: 'My First Dataset',
+      data: [65, 59, 80, 81, 56, 55, 40],
+      fill: false,
+      borderColor: 'rgb(75, 192, 192)',
+      tension: 0.1
+    }]
+  };
+
   return (
+    
     <div className="custom-container">
+
+      <div>
+        <Line data={data}></Line>
+      </div>
+
       <NavbarComponent handleSetSelectedMajor={handleClickSetSelectedMajor} />
       <div className="content-body">
 
@@ -316,6 +364,7 @@ function Page() {
               {/* <AccumulativeGPA totalCredits={totalCredits} totalPoints={totalPoints} /> */}
             </div> <ProgressListComponent list={gradeList} handleDelete={removeFromGradeList} totalCredits={totalCredits} totalPoints={totalPoints} />
           </div>
+          
 
           <div className="semesters" style={{ marginLeft: "0px" }}>
             <button
@@ -361,7 +410,9 @@ function Page() {
                         )}
                       </tbody>
                     </table>
+
                   </div>
+                  
                 )}
               </div> : null
             }
