@@ -5,8 +5,6 @@ import { useLocalStorage } from "react-use"
 
 import "./style.css"
 import NavbarComponent from "./NavbarComponent"
-import GreetingComponent from "./GreetingComponent"
-import AccumulativeGPA from "./AccumulativeGPA"
 import ProgressListComponent from "./ProgressListComponent"
 import FormSelectMajorComponent from "./FormSelectMajorComponent"
 
@@ -22,6 +20,7 @@ import {
 ChartJS.register(LineElement, CategoryScale, LinearScale, PointElement)
 
 function Page() {
+
   // For Modal and Semester
   const [showModal, setShowModal] = React.useState(false)
   const [selectedYear, setSelectedYear] = React.useState("")
@@ -30,6 +29,7 @@ function Page() {
   const handleClickShowModal = (courseName, courseCode, courseCredit) => {
     setShowModal(true)
   }
+
   const handleCloseModal = () => setShowModal(false)
   // Handle for Year and Semester
   const handleSelectYear = year => setSelectedYear(year)
@@ -37,6 +37,9 @@ function Page() {
 
   // Handle to hide or show completed courses
   const [showCompletedCourses, setShowCompletedCourses] = React.useState(false)
+
+  // Handle2 to hide or show completed courses
+  const [showCompletedCourses2, setShowCompletedCourses2] = React.useState(true)
 
   // handle no course group selected
   const handleNoGroupSelected = x => {
@@ -53,9 +56,6 @@ function Page() {
 
   // const for toggling semester
   const [showSemesters, setShowSemesters] = React.useState(false)
-
-  // var for storing semester labels
-  let semesterLabels = []
 
   // var for lineChart data
   // let data = {}
@@ -90,9 +90,6 @@ function Page() {
   // useState for selectedGradePoint
   const [selectedGradePoint, setSelectedGradePoint] = React.useState(0)
 
-  // useState for chartDataV2
-  const [Chartdatav2, setChartDatav2] = React.useState([])
-
   // localStorage for gradeList (a list that stores courses and their respective grades)
   const [gradeList, setGradeList] = useLocalStorage("gradeList", [])
 
@@ -107,9 +104,6 @@ function Page() {
 
   // localStorage for totalCredits
   const [totalCredits, setTotalCredits] = useLocalStorage("Total Credits", 0)
-
-  // localStorage for overallGPA
-  const [overallGPA, setOverallGPA] = useLocalStorage("overallGPA", 0)
 
   const handleClickSetSelectedMajor = major => {
     setSelectedMajor(major)
@@ -305,15 +299,12 @@ function Page() {
       console.table(results[semester])
     }
 
-    if (gradeList.length > 0) {
-      setShowCompletedCourses(true)
-    } else {
-      setShowCompletedCourses(false)
-    }
+    // if (gradeList.length > 0) {
+    //   setShowCompletedCourses(true)
+    // } else {
+    //   setShowCompletedCourses(false)
+    // }
   }, [selectedMajor, selectedGroup, subjectsData, gradeList])
-
-  const [semesterGPAsState, setSemesterGPAsState] = React.useState([])
-  const [semesterLabelsState, setSemesterLabelsState] = React.useState([])
 
   const labels = []
   const semGPAs = []
@@ -333,45 +324,10 @@ function Page() {
       {
         data: semGPAs,
         borderColor: "rgb(53, 162, 235)",
-        backgroundColor: "rgba(53, 162, 235, 0.5)",
-        cubicInterpolationMode: "monotone",
+        backgroundColor: "rgba(53, 162, 235, 0.5)"
       },
     ],
   }
-
-  // React.useEffect(() => {
-  //   for (const key in semesterGradeList) {
-  //     console.log(semesterGradeList[key][semesterGradeList[key].length - 1])
-  //     console.log(semesterGradeList[key][semesterGradeList[key].length - 2])
-  //     const theGPA =
-  //       semesterGradeList[key][semesterGradeList[key].length - 1] /
-  //       semesterGradeList[key][semesterGradeList[key].length - 2]
-  //     semesterGPAsState.push(Number(theGPA.toFixed(2)))
-  //     semesterLabelsState.push(key)
-  //   }
-
-  //   // console.log("SEMESTER LABELS", semesterLabels)
-  //   // console.log("SEMESTER GPAS", semesterGPAs)
-  //   // console.log("LINE CHART DATA", Chartdata)
-  //   // console.log("Setting charts data v2", Chartdatav2)
-  //   // console.log(semesterGradeList)
-  //   // console.log(semesterLabels, semesterGPAs)
-
-  //   setSemesterGPAsState([...semesterGPAsState])
-  //   setSemesterLabelsState([...semesterLabelsState])
-
-  //   setChartDatav2({
-  //     labels: semesterLabelsState,
-  //     datasets: [
-  //       {
-  //         data: semesterGPAsState,
-  //         fill: false,
-  //         borderColor: "rgb(75, 192, 192)",
-  //         tension: 0.1,
-  //       },
-  //     ],
-  //   })
-  // }, [semesterGradeList])
 
   React.useEffect(() => {
     setSelectedGroup({ groupName: "None", subjects: [] })
@@ -385,44 +341,37 @@ function Page() {
     }
   }, [selectedGroup])
 
-  const Chartdata = {
-    labels: semesterLabelsState,
-    datasets: [
-      {
-        data: semesterGPAsState,
-        fill: false,
-        borderColor: "rgb(75, 192, 192)",
-        tension: 0.1,
-      },
-    ],
-  }
+  // const options for line
 
-  const data2 = {
-    labels: ["Jan", "Jan", "Jan", "Jan", "Jan", "Jan", "Jan"],
-    datasets: [
-      {
-        label: "My First Dataset",
-        data: [65, 59, 80, 81, 56, 55, 40],
-        fill: false,
-        borderColor: "rgb(75, 192, 192)",
-        tension: 0.1,
-      },
-    ],
-  }
+  const options = {
+    scales: {
+      yAxes: [
+        {
+          ticks: {
+            beginAtZero: true,
+            max: 4
+          }
+        }
+      ]
+    }
+  };
 
   return (
     <div className="custom-container">
       <NavbarComponent handleSetSelectedMajor={handleClickSetSelectedMajor} />
 
       <div className="content-body">
-        <div class="container-fluid" style={{ marginBottom: "0px" }}>
+      <div
+          class="container-fluid"
+          style={{ marginBottom: "0px", height: "0px", marginLeft: "0px" }}
+        >
           <div class="row">
-            <div class="col-md-6" style={{ marginBottom: "0px" }}>
+            <div class="col-md-5" style={{ marginBottom: "0px" }}>
               <div
                 style={{
                   width: "500px",
                   height: "200px",
-                  marginBottom: "70px",
+                  marginBottom: "0px",
                   marginLeft: "40px",
                 }}
               >
@@ -432,10 +381,24 @@ function Page() {
                 >
                   Your semesterly GPA progress visualized
                 </h5>
-                <Line data={data}></Line>
+                <Line data={data} options={options}></Line>
               </div>
             </div>
-            <div class="col-md-6"></div>
+            <div class="col-md-7">
+              <h5 className="app-title" style={{marginTop:"55px", color:"#023e8a"}}>Welcome to your personal Grade Tracker </h5>
+              {!showGroupCourses ? 
+              (<div>
+                <h6 className="app-subtitle" style={{marginTop:"10px", color:"#023e8a", marginLeft:"5px"}}>
+                  Get right into tracking your progress by choosing a course group
+                </h6></div>
+              ) : 
+               
+              (<h6 className="app-subtitle" style={{marginTop:"10px", color:"#023e8a", marginLeft:"5px"}}>
+               Set a grade for each of your courses and start adding !
+             </h6>)}
+             
+             <Button onClick={()=>{setShowCompletedCourses(!showCompletedCourses)}}>Toggle Completed Courses</Button>
+            </div>
           </div>
         </div>
 
@@ -447,8 +410,6 @@ function Page() {
                 className="main-body welcome-text"
                 style={{ marginLeft: "40px", marginTop: "0px" }}
               >
-                {/* <GreetingComponent major={selectedMajor}/> */}
-                {/* <AccumulativeGPA totalCredits={totalCredits} totalPoints={totalPoints} /> */}
               </div>{" "}
               <ProgressListComponent
                 list={gradeList}
@@ -497,7 +458,7 @@ function Page() {
                         </span>
                       </h5>
                       <table
-                        className="table table-hover table-striped"
+                        className="table table-hover"
                         style={{ marginTop: "0px" }}
                       >
                         <thead className="thead-semester">
@@ -512,19 +473,11 @@ function Page() {
                           {Object.values(semesterGradeList[key])
                             .slice(0, -2)
                             .map(x => (
-                              <tr className="table-info">
+                              <tr>
                                 <td>{x[0]}</td>
                                 <td>{x[1]}</td>
                                 <td>{x[2]}</td>
                                 <td>{x[3]}</td>
-                                {/* <td style={{ width: "30px", alignContent: "left" }}>
-                    <button 
-                      className="delete-button"
-                      onClick={() => {removeFromGradeListV2(x)}}
-                    >
-                      Delete
-                    </button>
-                  </td> */}
                               </tr>
                             ))}
                         </tbody>
@@ -542,25 +495,6 @@ function Page() {
           setSelectedGroup={handleClickSetSelectedGroup}
           subjectsData={subjectsData}
         />
-
-        {/* <CurriculumComponent
-        selectedGroup = {selectedGroup}
-        handleClickGrade = {handleClickGrade}
-        setSelectedCourse = {handleSetSelectedCourse}
-        handleClickShowModal = {handleClickShowModal}
-        showModal = {showModal}
-        handleCloseModal = {handleCloseModal}
-        selectedYear = {selectedYear}
-        selectedSemester = {selectedSemester}
-        handleSelectYear = {handleSelectYear}
-        handleSelectSemester = {handleSelectSemester}
-        handleClick = {handleClick}
-        selectedCourse = {selectedCourse}
-        setSelectedCourseCode = {handleSetSelectedCoursecode}
-        setSelectedCourseCredit = {handleSetSelectedCourseCredit}
-        selectedCourseCode = {selectedCourseCode}
-        selectedCourseCredit = {selectedCourseCredit}
-      /> */}
 
         {showGroupCourses ? (
           <table className="table table-striped">

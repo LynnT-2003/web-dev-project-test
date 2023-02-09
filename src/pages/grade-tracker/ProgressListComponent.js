@@ -1,5 +1,6 @@
 import * as React from "react"
 import "bootstrap/dist/css/bootstrap.min.css"
+import {Button} from "react-bootstrap"
 
 export default function ProgressListComponent(props) {
   const { list, handleDelete, totalCredits, totalPoints } = props
@@ -17,6 +18,7 @@ export default function ProgressListComponent(props) {
           Accumulative GPA:&nbsp;{(totalPoints / totalCredits).toFixed(2)}
         </span>
       </h5>
+
       <table
         className="table"
         style={{ marginTop: "5px", marginBottom: "0px" }}
@@ -34,7 +36,7 @@ export default function ProgressListComponent(props) {
           {list
             ? list.map((item, i) => {
                 return (
-                  <tr key={i} style={{ backgroundColor: "#caf0f8" }}>
+                  <tr key={i} style={{ backgroundColor: "white" }}>
                     <td>{item[1]}</td>
                     <td>{item[0]}</td>
                     <td>{item[2]}</td>

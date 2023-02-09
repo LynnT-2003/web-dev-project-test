@@ -2,11 +2,14 @@
     margin: 3px;
     width: 40px;
     height: 40px;
-    background-color: hsl(51, 80%, 90%);
+    background-color: #ade8f4;
     /* background-color:#B7383B;
     border-color: #B7383B; */
     /* color: #fff; */
     border-radius: 15px;
+    color:black;
+    border-color: #023e8a;
+    border-width: 0px;
 }
 
 .button1:hover {
@@ -21,8 +24,8 @@
     width: 80px;
     height: 35px;
     border-radius: 15px;
-    background-color: hsl(177, 100%, 14%);
-    color: white;
+    background-color: #a3cef1;
+    color: #023e8a;
     border-width: 0px;
 }
 
@@ -34,8 +37,8 @@
     width: 90px;
     height: 30px;
     border-radius: 8px;
-    background: hsl(193, 25%, 33%);
-    color: white;
+    background: #a3cef1;
+    color: #023e8a;
     border-width: 0px;
 }
 
@@ -119,8 +122,8 @@
 }
 
 .thead-dark{
-    background-color: hsl(192, 32%, 25%);
-    color:aliceblue;
+    background-color: #a3cef1;
+    color:#023e8a;
     font-family: Georgia, 'Times New Roman', Times, serif;
 }
 
@@ -129,8 +132,8 @@
     width: 150px;
     height: 30px;
     border-radius: 8px;
-    background-color: hsl(192, 32%, 30%);
-    color: white;
+    background-color: #a3cef1;
+    color: #023e8a;
     border-width: 0;
     font-family: "Roboto", Sans-serif;
     font-size: medium;
@@ -161,13 +164,17 @@ footer {
 }
 
 .badge-custom {
-    background-color:  #ECE8DD;
+    background-color:  #a3cef1;
     color: black;
+    padding-left: 1%;
+    padding-right: 1%;
+    padding-bottom: 0.5%;
+    padding-top: 0.5%;
 }
 
 .thead-semester{
-    background-color: #579BB1;
-    color:white
+    background-color: #ade8f4;
+    color: black;
 }
 
 th {
